@@ -6,14 +6,13 @@
 
 namespace App\DrupalStats\Jobs;
 
-use App\DrupalStats\Models\Entities\Node as NodeModel;
 use App\DrupalStats\Models\Entities\Term;
+use App\DrupalStats\Models\Repositories\NodeRepository;
 use Hussainweb\DrupalApi\Client;
 use Hussainweb\DrupalApi\Entity\Node;
 use Hussainweb\DrupalApi\Request\Collection\NodeCollectionRequest;
 use Hussainweb\DrupalApi\Request\FieldCollectionRequest;
 use Hussainweb\DrupalApi\Request\TaxonomyTermRequest;
-use Jenssegers\Mongodb\Eloquent\Model;
 
 class RetrieveNodeCollectionJob extends RetrieveJobBase
 {
@@ -29,62 +28,21 @@ class RetrieveNodeCollectionJob extends RetrieveJobBase
 
         $client = new Client();
         $collection = $client->getEntity($this->request);
-        $terms = [];
-        $releases = [];
+        $repo = new NodeRepository();
 
         /** @var Node $node */
         foreach ($collection as $node) {
-            $this->saveDataToModel($node, new NodeModel(), function ($key, $value) use (&$terms, &$releases) {
-                if (strpos($key, "taxonomy_vocabulary_") === 0) {
-                    if (is_array($value)) {
-                        foreach ($value as $i => $term_item) {
-                            $terms[$term_item->id] = $term_item->id;
-                            unset($value[$i]->uri);
-                            unset($value[$i]->resource);
-                        }
-                    }
-                    else {
-                        $terms[$value->id] = $value->id;
-                        unset($value->uri);
-                        unset($value->resource);
-                    }
-                }
-                elseif ($key == 'body' || $key == 'field_project_issue_guidelines' || $key == 'field_contributions' || $key == 'field_organization_training_desc') {
-                    $value = null;
-                }
-                elseif ($key == 'author' || $key == 'book' || $key == 'field_release_project') {
-                    unset($value->uri);
-                    unset($value->resource);
-                }
-                elseif ($key == 'book_ancestors' || $key == 'field_release_files' || $key == 'comments') {
-                    foreach ($value as $i => $items) {
-                        if ($key == 'field_release_files') {
-                            $releases[$items->id] = $items->id;
-                        }
-                        unset($value[$i]->uri);
-                        unset($value[$i]->resource);
-                    }
-                }
-                elseif ($key == 'upload' || $key == 'field_project_images') {
-                    foreach ($value as $i => $items) {
-                        unset($value[$i]->file->uri);
-                        unset($value[$i]->file->resource);
-                    }
-                }
-
-                return $value;
-            });
+            $repo->saveEntity($node);
         }
 
-        foreach ($terms as $tid) {
-            echo "Encountered term " . $tid . "...\n";
+        foreach ($repo->terms as $tid) {
             if (is_null(Term::find($tid))) {
                 echo "Queueing term " . $tid . "...\n";
                 $this->dispatch(new RetrieveTermJob(new TaxonomyTermRequest($tid)));
             }
         }
 
-        foreach ($releases as $release) {
+        foreach ($repo->releases as $release) {
             echo "Queuing release " . $release . "...\n";
             $this->dispatch(new RetrieveFieldReleaseJob(new FieldCollectionRequest($release)));
         }

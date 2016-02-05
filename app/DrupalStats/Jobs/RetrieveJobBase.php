@@ -29,18 +29,4 @@ abstract class RetrieveJobBase extends Job implements ShouldQueue
     {
         $this->request = $request;
     }
-
-    protected function saveDataToModel(Entity $entity, Model $model, callable $callback = null)
-    {
-        /** @var Model $item */
-        $item = $model->findOrNew($entity->getId());
-        $item->_id = $entity->getId();
-        foreach ($entity->getData() as $key => $value) {
-            if ($callback) {
-                $value = call_user_func($callback, $key, $value);
-            }
-            $item->$key = $value;
-        }
-        $item->save();
-    }
 }

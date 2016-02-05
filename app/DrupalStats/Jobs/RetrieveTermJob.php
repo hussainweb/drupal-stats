@@ -7,6 +7,7 @@
 namespace App\DrupalStats\Jobs;
 
 use App\DrupalStats\Models\Entities\Term;
+use App\DrupalStats\Models\Repositories\TermRepository;
 use Hussainweb\DrupalApi\Client;
 use Hussainweb\DrupalApi\Entity\TaxonomyTerm;
 use Hussainweb\DrupalApi\Request\TaxonomyTermRequest;
@@ -32,6 +33,7 @@ class RetrieveTermJob extends RetrieveJobBase
             return;
         }
 
-        $this->saveDataToModel($term, new Term());
+        $repo = new TermRepository();
+        $repo->saveEntity($term);
     }
 }

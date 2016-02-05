@@ -7,6 +7,7 @@
 namespace App\DrupalStats\Jobs;
 
 use App\DrupalStats\Models\Entities\User as UserModel;
+use App\DrupalStats\Models\Repositories\UserRepository;
 use Hussainweb\DrupalApi\Client;
 use Hussainweb\DrupalApi\Entity\User;
 use Hussainweb\DrupalApi\Request\Collection\UserCollectionRequest;
@@ -25,10 +26,14 @@ class RetrieveUserCollectionJob extends RetrieveJobBase
 
         $client = new Client();
         $collection = $client->getEntity($this->request);
+        $repo = new UserRepository();
 
-        /** @var User $entity */
-        foreach ($collection as $entity) {
-            $this->saveDataToModel($entity, new UserModel());
+        /** @var User $user */
+        foreach ($collection as $user) {
+            // Skip anonymous user as we don't need to save it.
+            if ($user->uid) {
+                $repo->saveEntity($user);
+            }
         }
 
         if ($next_url = $collection->getNextLink()) {

@@ -7,6 +7,7 @@
 namespace App\DrupalStats\Jobs;
 
 use App\DrupalStats\Models\Entities\FieldCollectionRelease;
+use App\DrupalStats\Models\Repositories\FieldReleaseRepository;
 use Hussainweb\DrupalApi\Client;
 use Hussainweb\DrupalApi\Entity\FieldCollection;
 
@@ -31,15 +32,7 @@ class RetrieveFieldReleaseJob extends RetrieveJobBase
             return;
         }
 
-        $this->saveDataToModel($fc, new FieldCollectionRelease(), function ($key, $value) {
-            if ($key == 'host_entity') {
-                unset($value->uri);
-            }
-            elseif ($key == 'field_release_file') {
-                unset($value->file->uri);
-                unset($value->file->resource);
-            }
-            return $value;
-        });
+        $repo = new FieldReleaseRepository();
+        $repo->saveEntity($fc);
     }
 }
