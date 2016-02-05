@@ -6,7 +6,6 @@
 
 namespace App\DrupalStats\Jobs;
 
-use App\DrupalStats\Models\Entities\User as UserModel;
 use App\DrupalStats\Models\Repositories\UserRepository;
 use Hussainweb\DrupalApi\Client;
 use Hussainweb\DrupalApi\Entity\User;

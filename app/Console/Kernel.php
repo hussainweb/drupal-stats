@@ -4,7 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\DrupalStats\Console\Commands\NodeInitQueue;
+use App\DrupalStats\Console\Commands\GetNodes;
+use App\DrupalStats\Console\Commands\GetTerms;
 
 class Kernel extends ConsoleKernel
 {
@@ -15,7 +16,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\Inspire::class,
-        NodeInitQueue::class,
+        GetNodes::class,
+        GetTerms::class,
     ];
 
     /**

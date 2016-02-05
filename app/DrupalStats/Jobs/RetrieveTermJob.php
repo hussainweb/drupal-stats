@@ -6,7 +6,6 @@
 
 namespace App\DrupalStats\Jobs;
 
-use App\DrupalStats\Models\Entities\Term;
 use App\DrupalStats\Models\Repositories\TermRepository;
 use Hussainweb\DrupalApi\Client;
 use Hussainweb\DrupalApi\Entity\TaxonomyTerm;

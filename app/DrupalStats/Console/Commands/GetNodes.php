@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ */
+
 namespace App\DrupalStats\Console\Commands;
 
 use App\DrupalStats\Jobs\RetrieveNodeCollectionJob;
@@ -7,7 +11,7 @@ use Hussainweb\DrupalApi\Request\Collection\NodeCollectionRequest;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
-class NodeInitQueue extends Command
+class GetNodes extends Command
 {
     use DispatchesJobs;
 
@@ -16,24 +20,14 @@ class NodeInitQueue extends Command
      *
      * @var string
      */
-    protected $signature = 'drustats:nodeinit {type}';
+    protected $signature = 'druget:nodes {type}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Initialize queue with node commands';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    protected $description = 'Initialize queue with commands to get nodes.';
 
     /**
      * Execute the console command.
