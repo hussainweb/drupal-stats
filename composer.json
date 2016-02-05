@@ -8,7 +8,8 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "hussainweb/drupal-api-client": "*@dev",
-        "jenssegers/mongodb": "~3.0@alpha"
+        "jenssegers/mongodb": "~3.0@alpha",
+        "pda/pheanstalk": "~3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
