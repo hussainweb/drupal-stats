@@ -8,30 +8,13 @@ namespace App\DrupalStats\Jobs;
 
 use App\DrupalStats\Models\Entities\Node as NodeModel;
 use App\DrupalStats\Models\Entities\Term;
-use App\Jobs\Job;
 use Hussainweb\DrupalApi\Client;
 use Hussainweb\DrupalApi\Entity\Node;
 use Hussainweb\DrupalApi\Request\Collection\NodeCollectionRequest;
 use Hussainweb\DrupalApi\Request\TaxonomyTermRequest;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 
-class RetrieveNodeCollectionJob extends Job implements ShouldQueue
+class RetrieveNodeCollectionJob extends RetrieveJobBase
 {
-    use InteractsWithQueue, SerializesModels;
-    use DispatchesJobs;
-
-    /**
-     * @var \Hussainweb\DrupalApi\Request\Collection\NodeCollectionRequest
-     */
-    protected $collectionRequest;
-
-    public function __construct(NodeCollectionRequest $collection_request)
-    {
-        $this->collectionRequest = $collection_request;
-    }
 
     /**
      * Execute the job.
@@ -40,17 +23,15 @@ class RetrieveNodeCollectionJob extends Job implements ShouldQueue
      */
     public function handle()
     {
+        echo "Retrieving " . (string) $this->request->getUri() . ".\n";
+
         $client = new Client();
-        $collection = $client->getEntity($this->collectionRequest);
+        $collection = $client->getEntity($this->request);
         $terms = [];
 
-        /** @var Node $item */
-        foreach ($collection as $item) {
-            $model = NodeModel::findOrNew($item->getId());
-            $model->_id = $item->getId();
-            foreach ($item->getData() as $key => $value) {
-                $model->$key = $value;
-
+        /** @var Node $node */
+        foreach ($collection as $node) {
+            $this->saveDataToModel($node, new NodeModel(), function ($key, $value) use (&$terms) {
                 if (strpos($key, "taxonomy_vocabulary_") === 0) {
                     if (is_array($value)) {
                         foreach ($value as $term_item) {
@@ -61,12 +42,13 @@ class RetrieveNodeCollectionJob extends Job implements ShouldQueue
                         $terms[$value->id] = $value->id;
                     }
                 }
-            }
-            $model->save();
+            });
         }
 
         foreach ($terms as $tid) {
+            echo "Encountered term " . $tid . "...\n";
             if (is_null(Term::find($tid))) {
+                echo "Queueing term " . $tid . "...\n";
                 $this->dispatch(new RetrieveTermJob(new TaxonomyTermRequest($tid)));
             }
         }

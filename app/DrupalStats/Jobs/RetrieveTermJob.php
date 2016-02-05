@@ -6,30 +6,13 @@
 
 namespace App\DrupalStats\Jobs;
 
-
 use App\DrupalStats\Models\Entities\Term;
-use App\Jobs\Job;
 use Hussainweb\DrupalApi\Client;
 use Hussainweb\DrupalApi\Entity\TaxonomyTerm;
 use Hussainweb\DrupalApi\Request\TaxonomyTermRequest;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 
-class RetrieveTermJob extends Job
+class RetrieveTermJob extends RetrieveJobBase
 {
-    use InteractsWithQueue, SerializesModels;
-    use DispatchesJobs;
-
-    /**
-     * @var \Hussainweb\DrupalApi\Request\TaxonomyTermRequest
-     */
-    protected $request;
-
-    public function __construct(TaxonomyTermRequest $request)
-    {
-        $this->request = $request;
-    }
 
     /**
      * Execute the job.
@@ -38,6 +21,8 @@ class RetrieveTermJob extends Job
      */
     public function handle()
     {
+        echo "Retrieving " . (string) $this->request->getUri() . "\n";
+
         $client = new Client();
         /** @var TaxonomyTerm $term */
         $term = $client->getEntity($this->request);
@@ -46,11 +31,6 @@ class RetrieveTermJob extends Job
             return;
         }
 
-        $model = Term::findOrNew($term->getId());
-        $model->_id = $term->getId();
-        foreach ($term->getData() as $key => $value) {
-            $model->$key = $value;
-        }
-        $model->save();
+        $this->saveDataToModel($term, new Term());
     }
 }
