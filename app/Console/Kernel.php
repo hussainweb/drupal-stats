@@ -6,6 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\DrupalStats\Console\Commands\GetNodes;
 use App\DrupalStats\Console\Commands\GetTerms;
+use App\DrupalStats\Console\Commands\GetUsers;
 
 class Kernel extends ConsoleKernel
 {
@@ -18,6 +19,7 @@ class Kernel extends ConsoleKernel
         Commands\Inspire::class,
         GetNodes::class,
         GetTerms::class,
+        GetUsers::class,
     ];
 
     /**
