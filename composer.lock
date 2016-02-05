@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9d2634033d92788b1f8fdef51a621b1b",
-    "content-hash": "cbf9699e34a9b1b1333bc4d1c547868b",
+    "hash": "5870c8baff05f469f913215eb1976694",
+    "content-hash": "7b59d62ae88c7289da8905f85157557f",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -1171,6 +1171,55 @@
                 "beanstalkd"
             ],
             "time": "2015-08-07 21:42:41"
+        },
+        {
+            "name": "pmatseykanets/artisan-beans",
+            "version": "v0.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pmatseykanets/artisan-beans.git",
+                "reference": "f1dd236c5f1b5d6e0a3ad43ff307a853ae996da1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pmatseykanets/artisan-beans/zipball/f1dd236c5f1b5d6e0a3ad43ff307a853ae996da1",
+                "reference": "f1dd236c5f1b5d6e0a3ad43ff307a853ae996da1",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "~5.1",
+                "illuminate/support": "~5.1",
+                "pda/pheanstalk": "~3.0",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Pvm\\ArtisanBeans\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Peter Matseykanets"
+                }
+            ],
+            "description": "Easily manage your Beanstalkd job queues right from the Laravel artisan command",
+            "keywords": [
+                "artisan",
+                "beanstalkd",
+                "job",
+                "laravel",
+                "queue"
+            ],
+            "time": "2015-09-11 15:49:07"
         },
         {
             "name": "psr/http-message",

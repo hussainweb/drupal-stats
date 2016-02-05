@@ -158,6 +158,8 @@ return [
 
         // MongoDB provider
         Jenssegers\Mongodb\MongodbServiceProvider::class,
+        // Beanstalk console provider
+        Pvm\ArtisanBeans\ArtisanBeansServiceProvider::class,
     ],
 
     /*

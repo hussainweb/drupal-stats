@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "hussainweb/drupal-api-client": "*@dev",
         "jenssegers/mongodb": "~3.0@alpha",
-        "pda/pheanstalk": "~3.0"
+        "pda/pheanstalk": "~3.0",
+        "pmatseykanets/artisan-beans": "^0.1.4"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
