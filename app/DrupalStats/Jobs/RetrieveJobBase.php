@@ -36,10 +36,10 @@ abstract class RetrieveJobBase extends Job implements ShouldQueue
         $item = $model->findOrNew($entity->getId());
         $item->_id = $entity->getId();
         foreach ($entity->getData() as $key => $value) {
-            $item->$key = $value;
             if ($callback) {
-                call_user_func($callback, $key, $value);
+                $value = call_user_func($callback, $key, $value);
             }
+            $item->$key = $value;
         }
         $item->save();
     }

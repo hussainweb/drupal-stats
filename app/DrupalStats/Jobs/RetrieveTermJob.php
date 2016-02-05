@@ -28,6 +28,7 @@ class RetrieveTermJob extends RetrieveJobBase
         $term = $client->getEntity($this->request);
 
         if (empty($term->tid)) {
+            echo "Skipping empty term " . (string) $this->request->getUri() . "\n";
             return;
         }
 

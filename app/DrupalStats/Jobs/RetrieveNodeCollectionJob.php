@@ -12,6 +12,7 @@ use Hussainweb\DrupalApi\Client;
 use Hussainweb\DrupalApi\Entity\Node;
 use Hussainweb\DrupalApi\Request\Collection\NodeCollectionRequest;
 use Hussainweb\DrupalApi\Request\TaxonomyTermRequest;
+use Jenssegers\Mongodb\Eloquent\Model;
 
 class RetrieveNodeCollectionJob extends RetrieveJobBase
 {
@@ -34,14 +35,39 @@ class RetrieveNodeCollectionJob extends RetrieveJobBase
             $this->saveDataToModel($node, new NodeModel(), function ($key, $value) use (&$terms) {
                 if (strpos($key, "taxonomy_vocabulary_") === 0) {
                     if (is_array($value)) {
-                        foreach ($value as $term_item) {
+                        foreach ($value as $i => $term_item) {
                             $terms[$term_item->id] = $term_item->id;
+                            unset($value[$i]->uri);
+                            unset($value[$i]->resource);
                         }
                     }
                     else {
                         $terms[$value->id] = $value->id;
+                        unset($value->uri);
+                        unset($value->resource);
                     }
                 }
+                elseif ($key == 'body' || $key == 'field_project_issue_guidelines') {
+                    $value = null;
+                }
+                elseif ($key == 'author' || $key == 'book' || $key == 'field_release_project') {
+                    unset($value->uri);
+                    unset($value->resource);
+                }
+                elseif ($key == 'book_ancestors' || $key == 'field_release_files' || $key == 'comments') {
+                    foreach ($value as $i => $items) {
+                        unset($value[$i]->uri);
+                        unset($value[$i]->resource);
+                    }
+                }
+                elseif ($key == 'upload' || $key == 'field_project_images') {
+                    foreach ($value as $i => $items) {
+                        unset($value[$i]->file->uri);
+                        unset($value[$i]->file->resource);
+                    }
+                }
+
+                return $value;
             });
         }
 
