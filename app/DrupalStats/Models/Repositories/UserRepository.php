@@ -11,6 +11,8 @@ use App\DrupalStats\Models\Entities\User;
 class UserRepository extends RepositoryBase
 {
 
+    public $organizations = [];
+
     /**
      * {@inheritdoc}
      */
@@ -32,6 +34,9 @@ class UserRepository extends RepositoryBase
 
         if (in_array($key, $keys_references)) {
             foreach ($value as $i => $item) {
+                if ($key == 'field_organizations') {
+                    $this->organizations[$item->id] = $item->id;
+                }
                 unset($value[$i]->uri);
                 unset($value[$i]->resource);
             }

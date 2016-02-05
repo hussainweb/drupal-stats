@@ -6,11 +6,11 @@
 
 namespace App\DrupalStats\Jobs;
 
-use App\DrupalStats\Models\Repositories\FieldReleaseRepository;
+use App\DrupalStats\Models\Repositories\FieldOrganizationRepository;
 use Hussainweb\DrupalApi\Client;
 use Hussainweb\DrupalApi\Entity\FieldCollection;
 
-class RetrieveFieldReleaseJob extends RetrieveJobBase
+class RetrieveFieldOrganizationJob extends RetrieveJobBase
 {
 
     /**
@@ -31,7 +31,7 @@ class RetrieveFieldReleaseJob extends RetrieveJobBase
             return;
         }
 
-        $repo = new FieldReleaseRepository();
+        $repo = new FieldOrganizationRepository();
         $repo->saveEntity($fc);
     }
 }

@@ -10,6 +10,7 @@ use App\DrupalStats\Models\Repositories\UserRepository;
 use Hussainweb\DrupalApi\Client;
 use Hussainweb\DrupalApi\Entity\User;
 use Hussainweb\DrupalApi\Request\Collection\UserCollectionRequest;
+use Hussainweb\DrupalApi\Request\FieldCollectionRequest;
 
 class RetrieveUserCollectionJob extends RetrieveJobBase
 {
@@ -33,6 +34,11 @@ class RetrieveUserCollectionJob extends RetrieveJobBase
             if ($user->uid) {
                 $repo->saveEntity($user);
             }
+        }
+
+        foreach ($repo->organizations as $organization) {
+            echo "Queuing organization " . $organization . "...\n";
+            $this->dispatch(new RetrieveFieldOrganizationJob(new FieldCollectionRequest($organization)));
         }
 
         if ($next_url = $collection->getNextLink()) {

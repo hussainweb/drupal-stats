@@ -68,9 +68,9 @@ class NodeRepository extends RepositoryBase
         }
         elseif (in_array($key, $keys_references)) {
             if (is_array($value)) {
-                foreach ($value as $i => $items) {
+                foreach ($value as $i => $item) {
                     if ($key == 'field_release_files') {
-                        $this->releases[$items->id] = $items->id;
+                        $this->releases[$item->id] = $item->id;
                     }
                     unset($value[$i]->uri);
                     unset($value[$i]->resource);
@@ -82,7 +82,7 @@ class NodeRepository extends RepositoryBase
             }
         }
         elseif (in_array($key, $keys_files)) {
-            foreach ($value as $i => $items) {
+            foreach ($value as $i => $item) {
                 unset($value[$i]->file->uri);
                 unset($value[$i]->file->resource);
             }
