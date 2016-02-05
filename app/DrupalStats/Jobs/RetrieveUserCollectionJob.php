@@ -26,7 +26,7 @@ class RetrieveUserCollectionJob extends RetrieveJobBase
         $client = new Client();
         $collection = $client->getEntity($this->request);
 
-        /** @var User $item */
+        /** @var User $entity */
         foreach ($collection as $entity) {
             $this->saveDataToModel($entity, new UserModel());
         }
@@ -34,8 +34,7 @@ class RetrieveUserCollectionJob extends RetrieveJobBase
         if ($next_url = $collection->getNextLink()) {
             $next_url_params = [];
             parse_str($next_url->getQuery(), $next_url_params);
-            $job = new UserCollectionRequest($next_url_params);
-            $this->dispatch(new RetrieveUserCollectionJob($job));
+            $this->dispatch(new RetrieveUserCollectionJob(new UserCollectionRequest($next_url_params)));
         }
     }
 }
