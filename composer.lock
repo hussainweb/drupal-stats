@@ -338,12 +338,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hussainweb/drupal-api-client.git",
-                "reference": "14a6b7ccd6a2ba6769b21909b25eba5c9d94cb6e"
+                "reference": "f171b8c1ae829e12111b9bca2ef98d5958db52d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hussainweb/drupal-api-client/zipball/14a6b7ccd6a2ba6769b21909b25eba5c9d94cb6e",
-                "reference": "14a6b7ccd6a2ba6769b21909b25eba5c9d94cb6e",
+                "url": "https://api.github.com/repos/hussainweb/drupal-api-client/zipball/f171b8c1ae829e12111b9bca2ef98d5958db52d4",
+                "reference": "f171b8c1ae829e12111b9bca2ef98d5958db52d4",
                 "shasum": ""
             },
             "require": {
@@ -376,7 +376,7 @@
             "keywords": [
                 "drupal"
             ],
-            "time": "2016-02-05 11:29:21"
+            "time": "2016-02-05 12:16:55"
         },
         {
             "name": "jakub-onderka/php-console-color",

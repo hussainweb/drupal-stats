@@ -42,7 +42,7 @@ class RetrieveTermJob extends Job
         /** @var TaxonomyTerm $term */
         $term = $client->getEntity($this->request);
 
-        if (empty($term->getData()->tid)) {
+        if (empty($term->tid)) {
             return;
         }
 
