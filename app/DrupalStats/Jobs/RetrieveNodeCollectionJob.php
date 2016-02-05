@@ -11,6 +11,7 @@ use App\DrupalStats\Models\Entities\Term;
 use Hussainweb\DrupalApi\Client;
 use Hussainweb\DrupalApi\Entity\Node;
 use Hussainweb\DrupalApi\Request\Collection\NodeCollectionRequest;
+use Hussainweb\DrupalApi\Request\FieldCollectionRequest;
 use Hussainweb\DrupalApi\Request\TaxonomyTermRequest;
 use Jenssegers\Mongodb\Eloquent\Model;
 
@@ -29,10 +30,11 @@ class RetrieveNodeCollectionJob extends RetrieveJobBase
         $client = new Client();
         $collection = $client->getEntity($this->request);
         $terms = [];
+        $releases = [];
 
         /** @var Node $node */
         foreach ($collection as $node) {
-            $this->saveDataToModel($node, new NodeModel(), function ($key, $value) use (&$terms) {
+            $this->saveDataToModel($node, new NodeModel(), function ($key, $value) use (&$terms, &$releases) {
                 if (strpos($key, "taxonomy_vocabulary_") === 0) {
                     if (is_array($value)) {
                         foreach ($value as $i => $term_item) {
@@ -47,7 +49,7 @@ class RetrieveNodeCollectionJob extends RetrieveJobBase
                         unset($value->resource);
                     }
                 }
-                elseif ($key == 'body' || $key == 'field_project_issue_guidelines') {
+                elseif ($key == 'body' || $key == 'field_project_issue_guidelines' || $key == 'field_contributions' || $key == 'field_organization_training_desc') {
                     $value = null;
                 }
                 elseif ($key == 'author' || $key == 'book' || $key == 'field_release_project') {
@@ -56,6 +58,9 @@ class RetrieveNodeCollectionJob extends RetrieveJobBase
                 }
                 elseif ($key == 'book_ancestors' || $key == 'field_release_files' || $key == 'comments') {
                     foreach ($value as $i => $items) {
+                        if ($key == 'field_release_files') {
+                            $releases[$items->id] = $items->id;
+                        }
                         unset($value[$i]->uri);
                         unset($value[$i]->resource);
                     }
@@ -77,6 +82,11 @@ class RetrieveNodeCollectionJob extends RetrieveJobBase
                 echo "Queueing term " . $tid . "...\n";
                 $this->dispatch(new RetrieveTermJob(new TaxonomyTermRequest($tid)));
             }
+        }
+
+        foreach ($releases as $release) {
+            echo "Queuing release " . $release . "...\n";
+            $this->dispatch(new RetrieveFieldReleaseJob(new FieldCollectionRequest($release)));
         }
 
         if ($next_url = $collection->getNextLink()) {
