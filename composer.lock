@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5870c8baff05f469f913215eb1976694",
-    "content-hash": "7b59d62ae88c7289da8905f85157557f",
+    "hash": "72fd3999674d0b53b79de868ad27384a",
+    "content-hash": "e64d7ecd7f71c2b3d0beaaaeca5842ba",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -334,16 +334,16 @@
         },
         {
             "name": "hussainweb/drupal-api-client",
-            "version": "dev-master",
+            "version": "0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hussainweb/drupal-api-client.git",
-                "reference": "dd162d7531660e1af5b62eae8c3bf783346f3cbb"
+                "reference": "2fb84eb5011534d96a05c8e794f5f07eca957f06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hussainweb/drupal-api-client/zipball/dd162d7531660e1af5b62eae8c3bf783346f3cbb",
-                "reference": "dd162d7531660e1af5b62eae8c3bf783346f3cbb",
+                "url": "https://api.github.com/repos/hussainweb/drupal-api-client/zipball/2fb84eb5011534d96a05c8e794f5f07eca957f06",
+                "reference": "2fb84eb5011534d96a05c8e794f5f07eca957f06",
                 "shasum": ""
             },
             "require": {
@@ -355,6 +355,11 @@
                 "squizlabs/php_codesniffer": "~2.3"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.9.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Hussainweb\\DrupalApi\\": "src/"
@@ -376,7 +381,7 @@
             "keywords": [
                 "drupal"
             ],
-            "time": "2016-02-05 20:00:55"
+            "time": "2016-02-06 18:13:05"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -3489,7 +3494,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "hussainweb/drupal-api-client": 20,
         "jenssegers/mongodb": 15
     },
     "prefer-stable": false,
