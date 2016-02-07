@@ -27,7 +27,7 @@ class FieldReleaseRepository extends RepositoryBase
         if ($key == 'host_entity') {
             unset($value->uri);
         }
-        elseif ($key == 'field_release_file') {
+        elseif ($key == 'field_release_file' && isset($value->file)) {
             unset($value->file->uri);
             unset($value->file->resource);
         }
