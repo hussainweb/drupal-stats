@@ -49,6 +49,20 @@ class NodeRepository extends RepositoryBase
             'comments',
         ];
 
+        $keys_make_int = [
+            'field_download_count',
+            'created',
+            'changed',
+            'comment_count',
+            'comment_count_new',
+        ];
+
+        $keys_make_bool = [
+            'status',
+            'promote',
+            'sticky',
+        ];
+
         if (strpos($key, "taxonomy_vocabulary_") === 0) {
             if (is_array($value)) {
                 foreach ($value as $i => $term_item) {
@@ -86,6 +100,12 @@ class NodeRepository extends RepositoryBase
                 unset($value[$i]->file->uri);
                 unset($value[$i]->file->resource);
             }
+        }
+        elseif (in_array($key, $keys_make_int)) {
+            $value = (int) $value;
+        }
+        elseif (in_array($key, $keys_make_bool)) {
+            $value = (bool) $value;
         }
 
         return parent::processValue($key, $value);

@@ -41,6 +41,9 @@ class UserRepository extends RepositoryBase
                 unset($value[$i]->resource);
             }
         }
+        elseif ($key == 'created') {
+            $value = (int) $value;
+        }
 
         return parent::processValue($key, $value);
     }

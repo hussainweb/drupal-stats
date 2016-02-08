@@ -31,6 +31,9 @@ class FieldReleaseRepository extends RepositoryBase
             unset($value->file->uri);
             unset($value->file->resource);
         }
+        elseif ($key == 'field_release_file_downloads') {
+            $value = (int) $value;
+        }
 
         return parent::processValue($key, $value);
     }
