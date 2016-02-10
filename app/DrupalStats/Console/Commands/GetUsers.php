@@ -8,10 +8,9 @@ namespace App\DrupalStats\Console\Commands;
 
 use App\DrupalStats\Jobs\RetrieveUserCollectionJob;
 use Hussainweb\DrupalApi\Request\Collection\UserCollectionRequest;
-use Illuminate\Console\Command;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
-class GetUsers extends Command
+class GetUsers extends GetCommandBase
 {
     use DispatchesJobs;
 
@@ -36,6 +35,6 @@ class GetUsers extends Command
      */
     public function handle()
     {
-        $this->dispatch(new RetrieveUserCollectionJob(new UserCollectionRequest()));
+        $this->dispatch(new RetrieveUserCollectionJob(new UserCollectionRequest($this->getQueryFromOptions())));
     }
 }

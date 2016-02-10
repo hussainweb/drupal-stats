@@ -8,10 +8,9 @@ namespace App\DrupalStats\Console\Commands;
 
 use App\DrupalStats\Jobs\RetrieveNodeCollectionJob;
 use Hussainweb\DrupalApi\Request\Collection\NodeCollectionRequest;
-use Illuminate\Console\Command;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
-class GetNodes extends Command
+class GetNodes extends GetCommandBase
 {
     use DispatchesJobs;
 
@@ -20,7 +19,7 @@ class GetNodes extends Command
      *
      * @var string
      */
-    protected $signature = 'druget:nodes {type}';
+    protected $signature = 'druget:nodes {type : Node type to retrieve}';
 
     /**
      * The console command description.
@@ -36,7 +35,7 @@ class GetNodes extends Command
      */
     public function handle()
     {
-        $params = [];
+        $params = $this->getQueryFromOptions();
         if ($type = $this->argument('type')) {
             $params['type'] = $type;
         }

@@ -8,10 +8,9 @@ namespace App\DrupalStats\Console\Commands;
 
 use App\DrupalStats\Jobs\RetrievePiftCiJobCollectionJob;
 use Hussainweb\DrupalApi\Request\Collection\PiftCiJobCollectionRequest;
-use Illuminate\Console\Command;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
-class GetPiftCiJob extends Command
+class GetPiftCiJob extends GetCommandBase
 {
     use DispatchesJobs;
 
@@ -36,6 +35,6 @@ class GetPiftCiJob extends Command
      */
     public function handle()
     {
-        $this->dispatch(new RetrievePiftCiJobCollectionJob(new PiftCiJobCollectionRequest()));
+        $this->dispatch(new RetrievePiftCiJobCollectionJob(new PiftCiJobCollectionRequest($this->getQueryFromOptions())));
     }
 }

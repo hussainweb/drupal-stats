@@ -8,10 +8,9 @@ namespace App\DrupalStats\Console\Commands;
 
 use App\DrupalStats\Jobs\RetrieveTermCollectionJob;
 use Hussainweb\DrupalApi\Request\Collection\TaxonomyTermCollectionRequest;
-use Illuminate\Console\Command;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
-class GetTerms extends Command
+class GetTerms extends GetCommandBase
 {
     use DispatchesJobs;
 
@@ -36,6 +35,6 @@ class GetTerms extends Command
      */
     public function handle()
     {
-        $this->dispatch(new RetrieveTermCollectionJob(new TaxonomyTermCollectionRequest()));
+        $this->dispatch(new RetrieveTermCollectionJob(new TaxonomyTermCollectionRequest($this->getQueryFromOptions())));
     }
 }
