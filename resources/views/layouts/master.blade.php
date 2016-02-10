@@ -46,7 +46,7 @@
         @yield('content')
     </div>
 
-    <footer class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+    <footer class="navbar navbar-inverse footer">
         <div class="container">
             <div class="navbar-text pull-left">
                 Drupal is a <a href="http://drupal.com/trademark" target="_blank">registered trademark</a> of <a href="http://buytaert.net/" target="_blank">Dries Buytaert</a>.
@@ -58,5 +58,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{ asset('js/bootstrap.js') }}"></script>
+
+    @stack('scripts')
 </body>
 </html>
