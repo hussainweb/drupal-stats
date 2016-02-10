@@ -38,8 +38,8 @@
                 });
 
         var layers = stack(data.data),
-                yGroupMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y; }); }),
-                yStackMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y0 + d.y; }); });
+                yGroupMax = d3.max(layers, function(layer) { return d3.max(layer, function (d) { return d.y; }); }),
+                yStackMax = d3.max(layers, function(layer) { return d3.max(layer, function (d) { return d.y0 + d.y; }); });
 
         var yScale = d3.scale.pow().exponent(0.2)
                 .domain([0, yStackMax])
@@ -53,7 +53,7 @@
 
         var yAxis = d3.svg.axis()
                 .scale(yScale)
-                .tickSize(1)
+                .tickSize(0)
                 .tickPadding(6)
                 .orient("left")
                 .tickFormat(d3.format(",f"));
@@ -68,31 +68,35 @@
                 .data(layers)
                 .enter().append("g")
                 .attr("class", "layer")
-                .style("fill", function(d, i) { return color(d[i].status); });
+                .style("fill", function (d, i) { return color(d[i].status); });
 
         var rect = layer.selectAll("rect")
-                .data(function(d) { return d; })
+                .data(function (d) { return d; })
                 .enter().append("rect")
-                .attr("x", function(d) { return d.x; })
+                .attr("x", function (d) { return d.x; })
                 .attr("y", height)
                 .attr("width", xScale.rangeBand())
-                .attr("height", 0)
-                .attr("title", function (d) { return d.status + " " + d.count; });
+                .attr("height", 0);
+
+        rect.append('title')
+                .text(function (d) { return d.status + ": " + d.count; });
 
         rect.transition()
-                .delay(function(d, i) { return i * 10; })
-                .attr("y", function(d) { return yScale(d.y0 + d.y); })
-                .attr("height", function(d) { return yScale(d.y0) - yScale(d.y0 + d.y); });
+                .delay(function (d, i) { return i * 10; })
+                .attr("y", function (d) { return yScale(d.y0 + d.y); })
+                .attr("height", function (d) { return yScale(d.y0) - yScale(d.y0 + d.y); });
 
         svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")")
-                .call(xAxis);
+                .call(xAxis)
+                .append('rect').attr('x', 0).attr('y', 0).attr('width', width).attr('height', 2);
 
         svg.append("g")
                 .attr("class", "y axis")
                 .attr("transform", "translate(0, 0)")
-                .call(yAxis);
+                .call(yAxis)
+                .append('rect').attr('x', 0).attr('y', 0).attr('width', 2).attr('height', height);
 
         d3.selectAll("input").on("change", change);
 
@@ -111,12 +115,12 @@
 
             rect.transition()
                     .duration(500)
-                    .delay(function(d, i) { return i * 10; })
-                    .attr("x", function(d, i, j) { return d.x + xScale.rangeBand() / data.status.length * j; })
+                    .delay(function (d, i) { return i * 10; })
+                    .attr("x", function (d, i, j) { return d.x + xScale.rangeBand() / data.status.length * j; })
                     .attr("width", xScale.rangeBand() / data.status.length)
                     .transition()
-                    .attr("y", function(d) { return yScale(d.y); })
-                    .attr("height", function(d) { return height - yScale(d.y); });
+                    .attr("y", function (d) { return yScale(d.y); })
+                    .attr("height", function (d) { return height - yScale(d.y); });
         }
 
         function transitionStacked() {
@@ -124,11 +128,11 @@
 
             rect.transition()
                     .duration(500)
-                    .delay(function(d, i) { return i * 10; })
-                    .attr("y", function(d) { return yScale(d.y0 + d.y); })
-                    .attr("height", function(d) { return yScale(d.y0) - yScale(d.y0 + d.y); })
+                    .delay(function (d, i) { return i * 10; })
+                    .attr("y", function (d) { return yScale(d.y0 + d.y); })
+                    .attr("height", function (d) { return yScale(d.y0) - yScale(d.y0 + d.y); })
                     .transition()
-                    .attr("x", function(d) { return d.x; })
+                    .attr("x", function (d) { return d.x; })
                     .attr("width", xScale.rangeBand());
         }
 
