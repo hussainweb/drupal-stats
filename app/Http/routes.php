@@ -15,6 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/viz/module-downloads', '\App\DrupalStats\Controllers\Visualizations\ProjectPageController@moduleDownloads');
+Route::get('/data/module-downloads', '\App\DrupalStats\Controllers\Data\ModuleDownloadsDataController@moduleDownloads');
+
+Route::get('/viz/ci-jobs', '\App\DrupalStats\Controllers\Visualizations\CiJobPageController@cijobStatus');
+Route::get('/data/ci-jobs', '\App\DrupalStats\Controllers\Data\CiJobsDataController@cijobsBranchStatus');
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
