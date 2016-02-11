@@ -18,9 +18,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.8.0/d3-legend.js" charset="utf-8"></script>
 <script>
 
-    var margin = {top: 40, right: 80, bottom: 20, left: 50},
+    var margin = {top: 40, right: 80, bottom: 200, left: 50},
             width = 960 - margin.left - margin.right,
-            height = 500 - margin.top - margin.bottom;
+            height = 750 - margin.top - margin.bottom;
 
     var color = d3.scale.category10();
 
@@ -32,20 +32,20 @@
             .shapePadding(10)
             .scale(color);
 
-    d3.json('{{ url('data/ci-jobs') }}', function (error, data) {
+    d3.json('{{ url('data/ci-jobs-reasons') }}', function (error, data) {
         if (error) {
             throw error;
         }
 
         var xScale = d3.scale.ordinal()
-                .domain(data.branches)
+                .domain(data.reasons)
                 .rangeRoundBands([0, width], .08);
 
         var stack = d3.layout.stack()
-                .x(function (d) { return xScale(d.branch); })
+                .x(function (d) { return xScale(d.reason); })
                 .y(function (d) { return d.count; })
                 .out(function (d, y0, y) {
-                    d.x = xScale(d.branch);
+                    d.x = xScale(d.reason);
                     d.y = y;
                     d.y0 = y0;
                 });
@@ -82,7 +82,7 @@
                 .data(layers)
                 .enter().append("g")
                 .attr("class", "layer")
-                .style("fill", function (d, i) { return color(d[i].status); });
+                .style("fill", function (d, i) { return color(d[i].branch); });
 
         var rect = layer.selectAll("rect")
                 .data(function (d) { return d; })
@@ -93,18 +93,26 @@
                 .attr("height", 0);
 
         rect.append('title')
-                .text(function (d) { return d.status + ": " + d.count; });
+                .text(function (d) { return d.branch + ": " + d.count; });
 
         rect.transition()
                 .delay(function (d, i) { return i * 10; })
                 .attr("y", function (d) { return yScale(d.y0 + d.y); })
                 .attr("height", function (d) { return yScale(d.y0) - yScale(d.y0 + d.y); });
 
-        svg.append("g")
+        var gXAxis = svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")")
-                .call(xAxis)
-                .append('rect').attr('x', 0).attr('y', 0).attr('width', width).attr('height', 2);
+                .call(xAxis);
+
+        gXAxis.selectAll("text")
+                .attr("y", 0)
+                .attr("x", 9)
+                .attr("dy", ".35em")
+                .attr("transform", "rotate(45)")
+                .style("text-anchor", "start");
+
+        gXAxis.append('rect').attr('x', 0).attr('y', 0).attr('width', width).attr('height', 2);
 
         svg.append("g")
                 .attr("class", "y axis")
@@ -137,8 +145,8 @@
             rect.transition()
                     .duration(500)
                     .delay(function (d, i) { return i * 10; })
-                    .attr("x", function (d, i, j) { return d.x + xScale.rangeBand() / data.status.length * j; })
-                    .attr("width", xScale.rangeBand() / data.status.length)
+                    .attr("x", function (d, i, j) { return d.x + xScale.rangeBand() / data.branches.length * j; })
+                    .attr("width", xScale.rangeBand() / data.branches.length)
                     .transition()
                     .attr("y", function (d) { return yScale(d.y); })
                     .attr("height", function (d) { return height - yScale(d.y); });
@@ -182,7 +190,7 @@
 
 @section('svgcontent')
     <div class="panel panel-body">
-        <h2>Overall CI jobs statistics</h2>
+        <h2>Overall CI jobs and reasons statistics</h2>
         <p>This chart shows all the CI jobs that have been running on drupal.org modern test infrastructure. The branch field has been introduced recently and hence most of the results fall under an empty branch.</p>
         <p>The graph is on an exaggerated exponential scale to show smaller values. Since only few of these jobs can be running at any time, the results are very skewed towards completed and error test runs which makes it necessary for such an exaggerated scale.</p>
     </div>

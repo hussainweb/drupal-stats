@@ -78,6 +78,68 @@ class CiJobsDataController extends Controller
         ]);
     }
 
+    public function cijobsBranchReason()
+    {
+        /** @var Database $db */
+        $db = DB::getMongoDB();
+
+        $rows = $db->pift_ci_jobs->aggregate([
+            [
+                '$group' => [
+                    '_id' => [
+                        'branch' => '$core_branch',
+                        'reason' => '$reason',
+                    ],
+                    'count' => [
+                        '$sum' => 1,
+                    ],
+                ],
+            ],
+        ])->toArray();
+
+        $reasons = array_unique(array_map(function ($row) {
+            return $row->_id->reason ?: 'not-set';
+        }, $rows));
+        $branches = array_unique(array_map(function ($row) {
+            return $row->_id->branch ?: 'not-set';
+        }, $rows));
+
+        sort($reasons);
+        sort($branches);
+
+        $data = [];
+        foreach ($branches as $branch) {
+            foreach ($reasons as $reason) {
+                $data[$branch][$reason] = [
+                    'branch' => $branch,
+                    'reason' => $reason,
+                    'count' => 0,
+                ];
+            }
+        }
+
+        foreach ($rows as $row) {
+            $branch = $row->_id->branch ?: 'not-set';
+            $reason = $row->_id->reason ?: 'not-set';
+
+            $data[$branch][$reason] = [
+                'branch' => $branch,
+                'reason' => $reason,
+                'count' => $row->count,
+            ];
+        }
+
+        $data = array_map(function ($data) {
+            return array_values($data);
+        }, $data);
+
+        return response()->json([
+            'branches' => array_values($branches),
+            'reasons' => array_values($reasons),
+            'data' => array_values($data),
+        ]);
+    }
+
     public function cijobsRefresh(JobStatus $job_status)
     {
         $job = $job_status::find('pift_ci_jobs');
