@@ -28,12 +28,14 @@ class RetrievePiftCiJobCollectionJob extends RetrieveJobBase
         $collection = $client->getEntity($this->request);
         $repo = new PiftCiJobRepository();
 
-        $max_last_updated = null;
+        // Save the maximum updated value in options as we won't have the actual
+        // maximum when parsing later pages.
+        $max_updated = !empty($this->options['max_updated']) ? $this->options['max_updated'] : null;
         $hit_last_updated = false;
 
         /** @var PiftCiJob $job */
         foreach ($collection as $job) {
-            $max_last_updated = ($max_last_updated < $job->updated) ? $job->updated : $max_last_updated;
+            $max_updated = ($max_updated < $job->updated) ? $job->updated : $max_updated;
             if (!empty($this->options['last_updated']) && $job->updated < $this->options['last_updated']) {
                 $hit_last_updated = true;
                 break;
@@ -44,6 +46,7 @@ class RetrievePiftCiJobCollectionJob extends RetrieveJobBase
         if (!$hit_last_updated && $next_url = $collection->getNextLink()) {
             $next_url_params = [];
             parse_str($next_url->getQuery(), $next_url_params);
+            $this->options['max_updated'] = $max_updated;
             $this->dispatch(new RetrievePiftCiJobCollectionJob(new PiftCiJobCollectionRequest($next_url_params), $this->options));
         }
         else {
@@ -51,7 +54,7 @@ class RetrievePiftCiJobCollectionJob extends RetrieveJobBase
                 echo sprintf("Completed retrieving ci jobs from %s.\n",
                   date('Y-m-d H:i:s', $this->options['last_updated']));
                 $job_status->queued = false;
-                $job_status->last_updated = $max_last_updated;
+                $job_status->last_updated = $max_updated;
                 $job_status->save();
             }
         }
