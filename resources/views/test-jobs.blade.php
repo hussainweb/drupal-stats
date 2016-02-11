@@ -19,7 +19,7 @@
             .shapePadding(10)
             .scale(color);
 
-    d3.json('/data/ci-jobs', function (error, data) {
+    d3.json('{{ url('data/ci-jobs') }}', function (error, data) {
         if (error) {
             throw error;
         }
@@ -145,7 +145,7 @@
     });
 
     function sendRefresh() {
-        d3.json('/data/ci-jobs/refresh', function (error, data) {
+        d3.json('{{ url('data/ci-jobs/refresh') }}', function (error, data) {
             var msg = data.message + " Refresh this page after some time to see updates.";
             alert(msg);
         });

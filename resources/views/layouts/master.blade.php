@@ -35,8 +35,18 @@
 
             <div class="collapse navbar-collapse" id="main-navbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about">About</a></li>
+                    <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="{{ url('/') }}">Home</a></li>
+                    <li class="{{ Request::is('about') ? 'active' : '' }}"><a href="{{ url('about') }}">About</a></li>
+                    <li class="dropdown {{ Request::is('viz/*') ? 'active' : '' }}">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Visualizations <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-header">Project Visualizations</li>
+                            <li class="{{ Request::is('viz/module-downloads') ? 'active' : '' }}"><a href="{{ url('viz/module-downloads') }}">Module Downloads Bubble</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">CI Jobs Visualizations</li>
+                            <li class="{{ Request::is('viz/ci-jobs') ? 'active' : '' }}"><a href="{{ url('viz/ci-jobs') }}">Overall CI Jobs Status</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>

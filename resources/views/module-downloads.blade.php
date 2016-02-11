@@ -32,7 +32,7 @@
 
         function graph(order) {
             svg.selectAll('.node').remove();
-            d3.json('/data/module-downloads', function (error, data) {
+            d3.json('{{ url('data/module-downloads') }}', function (error, data) {
                 if (order != 'random') {
                     data.sort(function(a, b) {
                         return parseFloat(b.value) - parseFloat(a.value);
