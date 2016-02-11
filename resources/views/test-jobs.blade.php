@@ -144,18 +144,25 @@
                 .call(legendOrdinal);
     });
 
+    function sendRefresh() {
+        d3.json('/data/ci-jobs/refresh', function (error, data) {
+            if (error) {
+                throw error;
+            }
+
+            var msg = data.message + " Refresh this page after some time to see updates.";
+            alert(msg);
+        });
+    }
+
 </script>
 @endpush
 
 @section('presvgcontent')
     <div class="col-sm-12">
-        <form>
-            <fieldset>
-                <label><input type="radio" name="mode" value="grouped"> Grouped</label>
-                <label><input type="radio" name="mode" value="stacked" checked> Stacked</label>
-                <button class="btn btn-warning" onclick="sendRefresh();">Refresh Data</button>
-            </fieldset>
-        </form>
+        <label><input type="radio" name="mode" value="grouped"> Grouped</label>
+        <label><input type="radio" name="mode" value="stacked" checked> Stacked</label>
+        <button class="btn btn-warning" onclick="sendRefresh();">Refresh Data</button>
     </div>
 @endsection
 

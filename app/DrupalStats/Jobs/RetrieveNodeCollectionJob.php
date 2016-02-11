@@ -50,7 +50,7 @@ class RetrieveNodeCollectionJob extends RetrieveJobBase
         if ($next_url = $collection->getNextLink()) {
             $next_url_params = [];
             parse_str($next_url->getQuery(), $next_url_params);
-            $this->dispatch(new RetrieveNodeCollectionJob(new NodeCollectionRequest($next_url_params)));
+            $this->dispatch(new RetrieveNodeCollectionJob(new NodeCollectionRequest($next_url_params), $this->options));
         }
     }
 }

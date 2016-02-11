@@ -25,8 +25,16 @@ abstract class RetrieveJobBase extends Job implements ShouldQueue
      */
     protected $request;
 
-    public function __construct(Request $request)
+    /**
+     * Additional options relevant to the job.
+     *
+     * @var array
+     */
+    protected $options;
+
+    public function __construct(Request $request, array $options = [])
     {
         $this->request = $request;
+        $this->options = $options;
     }
 }

@@ -20,6 +20,7 @@ Route::get('/data/module-downloads', '\App\DrupalStats\Controllers\Data\ModuleDo
 
 Route::get('/viz/ci-jobs', '\App\DrupalStats\Controllers\Visualizations\CiJobPageController@cijobStatus');
 Route::get('/data/ci-jobs', '\App\DrupalStats\Controllers\Data\CiJobsDataController@cijobsBranchStatus');
+Route::get('/data/ci-jobs/refresh', '\App\DrupalStats\Controllers\Data\CiJobsDataController@cijobsRefresh');
 
 /*
 |--------------------------------------------------------------------------
