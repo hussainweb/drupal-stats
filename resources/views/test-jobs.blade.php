@@ -1,5 +1,18 @@
 @extends('layouts.svg')
 
+@push('styles')
+<style>
+    .axis line {
+        fill: none;
+        stroke: black;
+    }
+
+    .tick line {
+        opacity: 0.2;
+    }
+</style>
+@endpush
+
 @push('scripts')
 <script src="//d3js.org/d3.v3.js" charset="utf-8"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.8.0/d3-legend.js" charset="utf-8"></script>
@@ -53,7 +66,8 @@
 
         var yAxis = d3.svg.axis()
                 .scale(yScale)
-                .tickSize(0)
+                .innerTickSize(-width)
+                .outerTickSize(0)
                 .tickPadding(6)
                 .orient("left")
                 .ticks(14, ',f');
@@ -121,6 +135,8 @@
                     .transition()
                     .attr("y", function (d) { return yScale(d.y); })
                     .attr("height", function (d) { return height - yScale(d.y); });
+
+            svg.select('.axis.y').call(yAxis);
         }
 
         function transitionStacked() {
@@ -134,6 +150,8 @@
                     .transition()
                     .attr("x", function (d) { return d.x; })
                     .attr("width", xScale.rangeBand());
+
+            svg.select('.axis.y').call(yAxis);
         }
 
         svg.append("g")
