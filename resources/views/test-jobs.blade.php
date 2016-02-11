@@ -56,7 +56,7 @@
                 .tickSize(0)
                 .tickPadding(6)
                 .orient("left")
-                .tickFormat(d3.format(",f"));
+                .ticks(8, ',f');
 
         var svg = d3.select(".svg-container").append("svg")
                 .attr("width", width + margin.left + margin.right)
@@ -142,26 +142,27 @@
 
         svg.select(".legendOrdinal")
                 .call(legendOrdinal);
-    })
+    });
 
 </script>
 @endpush
 
 @section('presvgcontent')
-    <form>
-        <label><input type="radio" name="mode" value="grouped"> Grouped</label>
-        <label><input type="radio" name="mode" value="stacked" checked> Stacked</label>
-    </form>
+    <div class="col-sm-12">
+        <form>
+            <fieldset>
+                <label><input type="radio" name="mode" value="grouped"> Grouped</label>
+                <label><input type="radio" name="mode" value="stacked" checked> Stacked</label>
+                <button class="btn btn-warning" onclick="sendRefresh();">Refresh Data</button>
+            </fieldset>
+        </form>
+    </div>
 @endsection
 
 @section('svgcontent')
-    <div class="col-sm-12">
-        <fieldset>
-            <button class="btn btn-default" onclick="graph('random')">Randomize</button>
-            <button class="btn btn-success" onclick="graph()">Reset</button>
-        </fieldset>
-    </div>
     <div class="panel panel-body">
-        <p>Module Downloads Bubble Chart</p>
+        <h2>Overall CI jobs statistics</h2>
+        <p>This chart shows all the CI jobs that have been running on drupal.org modern test infrastructure. The branch field hss been introduced recently and hence most of the results fall under an empty branch.</p>
+        <p>The graph is on an exaggerated exponential scale to show smaller values. Since only few of these jobs can be running at any time, the results are very skewed towards completed and error test runs which makes it necessary for such an exaggerated scale.</p>
     </div>
 @endsection

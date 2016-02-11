@@ -83,6 +83,7 @@
         </fieldset>
     </div>
     <div class="panel panel-body">
-        <p>Module Downloads Bubble Chart</p>
+        <h2>Module Downloads Bubble Chart</h2>
+        <p>This chart shows the top 200 downloaded modules from drupal.org. The color indicates the category and the size of the bubble indicates the number of downloads.</p>
     </div>
 @endsection
