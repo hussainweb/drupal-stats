@@ -41,7 +41,7 @@
                 yGroupMax = d3.max(layers, function(layer) { return d3.max(layer, function (d) { return d.y; }); }),
                 yStackMax = d3.max(layers, function(layer) { return d3.max(layer, function (d) { return d.y0 + d.y; }); });
 
-        var yScale = d3.scale.pow().exponent(0.2)
+        var yScale = d3.scale.pow().exponent(0.4)
                 .domain([0, yStackMax])
                 .range([height, 0]);
 
@@ -56,7 +56,7 @@
                 .tickSize(0)
                 .tickPadding(6)
                 .orient("left")
-                .ticks(8, ',f');
+                .ticks(14, ',f');
 
         var svg = d3.select(".svg-container").append("svg")
                 .attr("width", width + margin.left + margin.right)
@@ -146,10 +146,6 @@
 
     function sendRefresh() {
         d3.json('/data/ci-jobs/refresh', function (error, data) {
-            if (error) {
-                throw error;
-            }
-
             var msg = data.message + " Refresh this page after some time to see updates.";
             alert(msg);
         });
