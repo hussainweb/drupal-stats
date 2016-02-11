@@ -18,11 +18,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.8.0/d3-legend.js" charset="utf-8"></script>
 <script>
 
-    var margin = {top: 40, right: 50, bottom: 20, left: 50},
+    var margin = {top: 40, right: 80, bottom: 20, left: 50},
             width = 960 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
 
-    var color = d3.scale.category20();
+    var color = d3.scale.category10();
 
     var legendOrdinal = d3.legend.color()
             //d3 symbol creates a path-string, for example
@@ -114,6 +114,13 @@
 
         d3.selectAll("input").on("change", change);
 
+        svg.append("g")
+                .attr("class", "legendOrdinal")
+                .attr("transform", "translate(" + (width + 10) + ",20)");
+
+        svg.select(".legendOrdinal")
+                .call(legendOrdinal);
+
         var timeout = setTimeout(function() {
             d3.select("input[value=\"grouped\"]").property("checked", true).each(change);
         }, 2000);
@@ -153,13 +160,6 @@
 
             svg.select('.axis.y').call(yAxis);
         }
-
-        svg.append("g")
-                .attr("class", "legendOrdinal")
-                .attr("transform", "translate(" + (width - margin.right) + ",20)");
-
-        svg.select(".legendOrdinal")
-                .call(legendOrdinal);
     });
 
     function sendRefresh() {

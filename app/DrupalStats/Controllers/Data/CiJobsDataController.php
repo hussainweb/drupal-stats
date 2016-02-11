@@ -42,6 +42,9 @@ class CiJobsDataController extends Controller
             return $row->_id->branch ?: 'not-set';
         }, $rows));
 
+        sort($statuses);
+        sort($branches);
+
         $data = [];
         foreach ($statuses as $status) {
             foreach ($branches as $branch) {
