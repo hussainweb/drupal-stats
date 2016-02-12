@@ -13,11 +13,11 @@ class CiJobPageController extends Controller
 
     public function cijobStatus()
     {
-        return view('test-jobs', ['title' => 'CI Jobs - Status of tests']);
+        return view('ci-jobs/test-jobs', ['title' => 'CI Jobs - Status of tests']);
     }
 
     public function cijobReason()
     {
-        return view('test-reasons', ['title' => 'CI Jobs - Reasons for testing']);
+        return view('ci-jobs/test-reasons', ['title' => 'CI Jobs - Reasons for testing']);
     }
 }

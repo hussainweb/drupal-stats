@@ -13,6 +13,6 @@ class ProjectPageController extends Controller
 
     public function moduleDownloads()
     {
-        return view('module-downloads', ['title' => 'Module - Categories - Downloads Bubble Chart']);
+        return view('projects/module-downloads', ['title' => 'Module - Categories - Downloads Bubble Chart']);
     }
 }
