@@ -49,8 +49,8 @@
                 .start();
 
         var svg = d3.select(".svg-container").append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
+                .attr("width", width)
+                .attr("height", height)
                 .append("g")
                 .attr("transform", "translate(" + cx + "," + cy + ")");
 
@@ -77,18 +77,10 @@
 </script>
 @endpush
 
-@section('presvgcontent')
-    {{--<div class="col-sm-12">--}}
-        {{--<label><input type="radio" name="mode" value="grouped"> Grouped</label>--}}
-        {{--<label><input type="radio" name="mode" value="stacked" checked> Stacked</label>--}}
-        {{--<button class="btn btn-warning" onclick="sendRefresh();">Refresh Data</button>--}}
-    {{--</div>--}}
-@endsection
-
 @section('svgcontent')
     <div class="panel panel-body">
         <h2>Spoken Languages</h2>
-        <p>This chart shows all the CI jobs that have been running on drupal.org modern test infrastructure. The branch field has been introduced recently and hence most of the results fall under an empty branch.</p>
-        <p>The graph is on an exaggerated exponential scale to show smaller values. Since only few of these jobs can be running at any time, the results are very skewed towards completed and error test runs which makes it necessary for such an exaggerated scale.</p>
+        <p>This word cloud shows various languages spoken by the registered Drupal users all over the world. This information is taken and aggregated from all user profiles on d.o.</p>
+        <p>The size of the word is proportional (on a logarithmic scale) to number of users who have marked that they speak the language. Hover over the word to see the count of users speaking that language. Since this is a browser based visualization, you may use the browser's find feature to find your favourite languages.</p>
     </div>
 @endsection
