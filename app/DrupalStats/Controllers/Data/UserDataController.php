@@ -76,7 +76,7 @@ class UserDataController extends Controller
             ],
             [
                 '$match' => [
-                    'count' => ['$gte' => 5],
+                    'count' => ['$gte' => 2],
                 ],
             ],
             [
