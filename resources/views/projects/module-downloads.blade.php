@@ -7,7 +7,6 @@
         var diameter = 760,
             legendWidth = 200,
             format = d3.format(",d"),
-//            color = d3.scale.category20();
             color = d3.scale.ordinal().range(["#d9d9d9", "#11fd84", "#ffce9f", "#fec4ff", "#b7ffc0", "#8bfe01", "#e4f7fd", "#dade67", "#acfe70", "#0bffd9", "#ffd32f", "#fecad0", "#07ff49", "#fdfeb5", "#96e6d6", "#b7e815", "#60f1a0", "#cfdcba", "#fed173", "#94e2fe", "#d0d4ff", "#b1e783", "#f1fd59", "#68f35a", "#62fff2", "#7aecc3", "#7ffd88", "#ffe3ce", "#bee655", "#c3e19b", "#94ee3a", "#e6dc18", "#ffe7fd", "#ceffdd", "#e8fd98", "#feea5c", "#ecd68f"]);
 
         var bubble = d3.layout.pack()
@@ -60,6 +59,7 @@
                 node.append("text")
                         .attr("dy", ".3em")
                         .style("text-anchor", "middle")
+                        .style("font-size", function (d) { return (d.r / 3) + "px"; })
                         .text(function (d) { return d.r > 12 ? d.machine_name.substring(0, d.r / 3) : ''; });
 
                 svgRoot.append("g")

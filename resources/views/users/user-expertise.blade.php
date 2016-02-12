@@ -1,18 +1,5 @@
 @extends('layouts.svg')
 
-@push('styles')
-<style>
-    .axis line {
-        fill: none;
-        stroke: black;
-    }
-
-    .tick line {
-        opacity: 0.2;
-    }
-</style>
-@endpush
-
 @push('scripts')
 <script src="//d3js.org/d3.v3.js" charset="utf-8"></script>
 <script src="{{ asset('js/d3-cloud.js') }}" charset="utf-8"></script>
