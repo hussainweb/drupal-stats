@@ -33,7 +33,8 @@ class UserRepository extends RepositoryBase
         ];
 
         if (in_array($key, $keys_references)) {
-            foreach ((array) $value as $i => $item) {
+            $value = (array) $value;
+            foreach ($value as $i => $item) {
                 if ($key == 'field_organizations') {
                     $this->organizations[$item->id] = $item->id;
                 }
