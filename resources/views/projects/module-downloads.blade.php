@@ -59,7 +59,7 @@
                 node.append("text")
                         .attr("dy", ".3em")
                         .style("text-anchor", "middle")
-                        .style("font-size", function (d) { return (d.r / 3) + "px"; })
+                        .style("font-size", function (d) { return (2 * Math.sqrt(d.r)) + "px"; })
                         .text(function (d) { return d.r > 12 ? d.machine_name.substring(0, d.r / 3) : ''; });
 
                 svgRoot.append("g")
