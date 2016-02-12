@@ -31,8 +31,11 @@
         }
 
         var logScale = d3.scale.log()
-                .domain([1, d3.max(data, function (d) { return d.count; })])
-                .range([8, 60]);
+                .domain([
+                    d3.min(data, function (d) { return d.count; }),
+                    d3.max(data, function (d) { return d.count; })
+                ])
+                .range([12, 60]);
 
         var words = [];
         d3.layout.cloud()

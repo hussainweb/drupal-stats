@@ -75,11 +75,6 @@ class UserDataController extends Controller
                 ],
             ],
             [
-                '$match' => [
-                    'count' => ['$gte' => 5],
-                ],
-            ],
-            [
                 '$sort' => ['count' => -1],
             ],
         ])->toArray();
