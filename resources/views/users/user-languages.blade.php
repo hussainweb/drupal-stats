@@ -15,7 +15,6 @@
 
 @push('scripts')
 <script src="//d3js.org/d3.v3.js" charset="utf-8"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.8.0/d3-legend.js" charset="utf-8"></script>
 <script src="{{ asset('js/d3-cloud.js') }}" charset="utf-8"></script>
 <script>
 
