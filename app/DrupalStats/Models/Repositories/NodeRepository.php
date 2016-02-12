@@ -38,6 +38,10 @@ class NodeRepository extends RepositoryBase
             'field_project_issue_guidelines',
             'field_contributions',
             'field_organization_training_desc',
+            'field_developed',
+            'field_goals',
+            'field_module_selection',
+            'field_overview',
         ];
 
         $keys_references = [
@@ -47,6 +51,7 @@ class NodeRepository extends RepositoryBase
             'book_ancestors',
             'field_release_files',
             'comments',
+            'field_module',
         ];
 
         $keys_make_int = [
