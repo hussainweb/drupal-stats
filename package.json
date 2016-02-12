@@ -6,6 +6,7 @@
   "dependencies": {
     "bootstrap-sass": "^3.0.0",
     "d3": "^3.5.14",
+    "d3-cloud": "^1.2.1",
     "laravel-elixir": "^4.0.0",
     "nvd3": "^1.8.2"
   }

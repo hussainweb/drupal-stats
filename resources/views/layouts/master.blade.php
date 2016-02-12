@@ -48,6 +48,9 @@
                             <li class="dropdown-header">Project Visualizations</li>
                             <li class="{{ Request::is('viz/module-downloads') ? 'active' : '' }}"><a href="{{ url('viz/module-downloads') }}">Module Downloads Bubble</a></li>
                             <li class="divider"></li>
+                            <li class="dropdown-header">User Visualizations</li>
+                            <li class="{{ Request::is('viz/user-languages') ? 'active' : '' }}"><a href="{{ url('viz/user-languages') }}">Languages spoken</a></li>
+                            <li class="divider"></li>
                             <li class="dropdown-header">CI Jobs Visualizations</li>
                             <li class="{{ Request::is('viz/ci-jobs') ? 'active' : '' }}"><a href="{{ url('viz/ci-jobs') }}">Overall CI Jobs Status</a></li>
                             <li class="{{ Request::is('viz/ci-jobs-reasons') ? 'active' : '' }}"><a href="{{ url('viz/ci-jobs-reasons') }}">Reasons for testing</a></li>

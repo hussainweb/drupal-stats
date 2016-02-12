@@ -24,6 +24,8 @@ Route::get('/data/ci-jobs', '\App\DrupalStats\Controllers\Data\CiJobsDataControl
 Route::get('/data/ci-jobs-reasons', '\App\DrupalStats\Controllers\Data\CiJobsDataController@cijobsBranchReason');
 Route::get('/data/ci-jobs/refresh', '\App\DrupalStats\Controllers\Data\CiJobsDataController@cijobsRefresh');
 
+Route::get('/viz/user-languages', '\App\DrupalStats\Controllers\Visualizations\UserPageController@userLanguages');
+Route::get('/data/user-languages', '\App\DrupalStats\Controllers\Data\UserDataController@userLanguages');
 /*
 |--------------------------------------------------------------------------
 | Application Routes
