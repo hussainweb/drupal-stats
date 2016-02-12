@@ -44,8 +44,8 @@
                 .text(function (d) { return d.language; })
                 .font("Impact")
                 .fontSize(function (d) { return logScale(d.count); })
-                .rotate(function () { return (~~(Math.random() * 6) - 3) * 30; })
-                .spiral('rectangular')
+                .rotate(function () { return (~~(Math.random() * 2) - 1) * 90; })
+                .spiral('archimedean')
                 .on('word', function (word) {
                     words.push(word);
                 })
