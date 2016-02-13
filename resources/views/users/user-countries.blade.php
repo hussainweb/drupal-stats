@@ -72,7 +72,7 @@
         svg.append("path")
                 .datum(world)
                 .attr("d", path)
-                .attr("fill", "#ffffff")
+                .attr("fill", "transparent")
                 .attr("stroke", "#000000");
 
         var overlay = svg.append("g")

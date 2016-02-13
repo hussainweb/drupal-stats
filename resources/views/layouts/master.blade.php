@@ -49,6 +49,7 @@
                             <li class="{{ Request::is('viz/module-downloads') ? 'active' : '' }}"><a href="{{ url('viz/module-downloads') }}">Module Downloads Bubble</a></li>
                             <li class="divider"></li>
                             <li class="dropdown-header">User Visualizations</li>
+                            <li class="{{ Request::is('viz/user-countries') ? 'active' : '' }}"><a href="{{ url('viz/user-countries') }}">Countries</a></li>
                             <li class="{{ Request::is('viz/user-languages') ? 'active' : '' }}"><a href="{{ url('viz/user-languages') }}">Languages spoken</a></li>
                             <li class="{{ Request::is('viz/user-expertise') ? 'active' : '' }}"><a href="{{ url('viz/user-expertise') }}">Areas of Expertise</a></li>
                             <li class="divider"></li>
