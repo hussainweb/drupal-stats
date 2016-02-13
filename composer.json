@@ -4,13 +4,27 @@
     "keywords": ["laravel", "drupal"],
     "license": "GPL-2.0",
     "type": "project",
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "johan/worldjson",
+                "version": "1.0.0",
+                "dist": {
+                    "url": "https://github.com/johan/world.geo.json/archive/master.zip",
+                    "type": "zip"
+                }
+            }
+        }
+    ],
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
         "hussainweb/drupal-api-client": "^0.9",
         "jenssegers/mongodb": "~3.0@alpha",
         "pda/pheanstalk": "~3.0",
-        "pmatseykanets/artisan-beans": "^0.1.4"
+        "pmatseykanets/artisan-beans": "^0.1.4",
+        "johan/worldjson": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -15,4 +15,5 @@ elixir(function(mix) {
     mix.sass('app.scss');
     mix.browserify('bootstrap.js');
     mix.browserify('d3-cloud.js');
+    mix.copy('vendor/johan/worldjson/countries.geo.json', 'public/geojson/countries.geo.json');
 });

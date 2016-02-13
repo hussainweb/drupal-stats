@@ -20,4 +20,9 @@ class UserPageController extends Controller
     {
         return view('users/user-expertise', ['title' => 'User - Expertise']);
     }
+
+    public function userCountries()
+    {
+        return view('users/user-countries', ['title' => 'User - Countries']);
+    }
 }

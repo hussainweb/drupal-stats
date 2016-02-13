@@ -6,6 +6,7 @@
 
 namespace App\DrupalStats\Controllers\Data;
 
+use App\DrupalStats\Models\Services\CountryHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use MongoDB\Database;
@@ -97,5 +98,39 @@ class UserDataController extends Controller
         });
 
         return response()->json(array_values($expertise));
+    }
+
+    public function userCountries()
+    {
+        /** @var Database $db */
+        $db = DB::getMongoDB();
+
+        $country_list = new CountryHelper();
+
+        $countries = $db->users->aggregate([
+            [
+                '$group' => [
+                    '_id' => '$field_country',
+                    'count' => ['$sum' => 1],
+                ],
+            ],
+            [
+                '$sort' => ['count' => -1],
+            ],
+        ])->toArray();
+
+        $countries = array_map(function ($row) use ($db, $country_list) {
+            return [
+                'country' => $country_list->getCountryCode($row->_id),
+                'countryName' => $row->_id,
+                'count' => $row->count,
+            ];
+        }, $countries);
+
+        $countries = array_filter($countries, function ($val) {
+            return $val['country'] ? true : false;
+        });
+
+        return response()->json(array_values($countries));
     }
 }
