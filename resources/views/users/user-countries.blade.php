@@ -32,6 +32,7 @@
 @push('scripts')
 <script src="//d3js.org/d3.v3.js" charset="utf-8"></script>
 <script src="//d3js.org/d3.geo.projection.v0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.8.0/d3-legend.js" charset="utf-8"></script>
 <script>
 
     var width = 960,
@@ -63,6 +64,10 @@
             .datum(graticule.outline)
             .attr("class", "graticule outline")
             .attr("d", path);
+
+    svg.append("g")
+            .attr("class", "legendLog")
+            .attr("transform", "translate(20,430)");
 
     d3.json('{{ asset('geojson/countries.geo.json') }}', function (error, world) {
         if (error) {
@@ -98,6 +103,14 @@
 
             country.append("title")
                     .text(function (d) { return d.countryName + ": " + format(d.count); });
+
+            var logLegend = d3.legend.color()
+                    .cells([10, 100, 1000, 10000, 100000, 1000000])
+                    .labelFormat(format)
+                    .scale(color);
+
+            svg.select(".legendLog")
+                    .call(logLegend);
         });
     });
 
