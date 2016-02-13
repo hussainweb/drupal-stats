@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use MongoDB\Database;
 
-class ModuleDownloadsDataController extends Controller
+class ProjectDataController extends Controller
 {
 
     public function moduleDownloads(Request $request)
