@@ -61,4 +61,90 @@ class ProjectDataController extends Controller
 
         return response()->json($nodes);
     }
+
+    public function projectsGrowth()
+    {
+        /** @var Database $db */
+        $db = DB::getMongoDB();
+
+        $nodes = $db->nodes->aggregate([
+            [
+                '$match' => [
+                    'type' => [
+                        '$in' => [
+                            'project_module',
+                            'project_theme',
+                            'project_core',
+                            'project_distribution',
+                            'project_theme_engine',
+                        ],
+                    ],
+                ],
+            ],
+            [
+                '$project' => [
+                    '_id' => 0,
+                    'created' => 1,
+                    'type' => 1,
+                    'tsday' => [
+                        '$mod' => ['$created', 86400],
+                    ],
+                ],
+            ],
+            [
+                '$project' => [
+                    '_id' => 0,
+                    'type' => 1,
+                    'ts' => [
+                        '$subtract' => ['$created', '$tsday'],
+                    ],
+                ],
+            ],
+            [
+                '$group' => [
+                    '_id' => [
+                        'day' => '$ts',
+                        'project_type' => '$type',
+                    ],
+                    'count' => ['$sum' => 1],
+                ],
+            ],
+            [
+                '$sort' => ['_id.day' => 1],
+            ],
+        ]);
+
+        $projects = [
+            'project_module' => [],
+            'project_theme' => [],
+            'project_core' => [],
+            'project_distribution' => [],
+            'project_theme_engine' => [],
+        ];
+        $last_timestamps = [
+            'project_module' => 0,
+            'project_theme' => 0,
+            'project_core' => 0,
+            'project_distribution' => 0,
+            'project_theme_engine' => 0,
+        ];
+
+        $min_timestamp = mktime(0, 0, 0, 1, 1, 2000);
+        foreach ($nodes as $node) {
+            $type = $node->_id->project_type;
+
+            // We can just save the last timestamp per each project type as the
+            // list is sorted by timestamp anyway.
+            $last_timestamps[$type] += $node->count;
+
+            // We don't return data for before 2000.
+            if ($node->_id->day < $min_timestamp) {
+                continue;
+            }
+
+            $projects[$type][date('Y-m-d', $node->_id->day)] = $last_timestamps[$type];
+        }
+
+        return response()->json($projects);
+    }
 }

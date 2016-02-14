@@ -15,4 +15,9 @@ class ProjectPageController extends Controller
     {
         return view('projects/module-downloads', ['title' => 'Module - Categories - Downloads Bubble Chart']);
     }
+
+    public function projectsGrowth()
+    {
+        return view('projects/projects-growth', ['title' => 'Projects Growth']);
+    }
 }

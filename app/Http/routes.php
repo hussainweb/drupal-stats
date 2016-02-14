@@ -16,7 +16,9 @@ Route::get('/', function () {
 });
 
 Route::get('/viz/module-downloads', '\App\DrupalStats\Controllers\Visualizations\ProjectPageController@moduleDownloads');
+Route::get('/viz/projects-growth', '\App\DrupalStats\Controllers\Visualizations\ProjectPageController@projectsGrowth');
 Route::get('/data/module-downloads', '\App\DrupalStats\Controllers\Data\ProjectDataController@moduleDownloads');
+Route::get('/data/projects-growth', '\App\DrupalStats\Controllers\Data\ProjectDataController@projectsGrowth');
 
 Route::get('/viz/ci-jobs', '\App\DrupalStats\Controllers\Visualizations\CiJobPageController@cijobStatus');
 Route::get('/viz/ci-jobs-reasons', '\App\DrupalStats\Controllers\Visualizations\CiJobPageController@cijobReason');
@@ -30,6 +32,7 @@ Route::get('/viz/user-countries', '\App\DrupalStats\Controllers\Visualizations\U
 Route::get('/data/user-languages', '\App\DrupalStats\Controllers\Data\UserDataController@userLanguages');
 Route::get('/data/user-expertise', '\App\DrupalStats\Controllers\Data\UserDataController@userExpertise');
 Route::get('/data/user-countries', '\App\DrupalStats\Controllers\Data\UserDataController@userCountries');
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
