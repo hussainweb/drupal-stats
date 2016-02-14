@@ -24,6 +24,13 @@
         font-size: 16px;
         font-weight: bold;
     }
+
+    .value-legend-circle {
+        fill: #ffffff;
+        stroke-width: 2px;
+        stroke: #000000;
+        opacity: 0.6;
+    }
 </style>
 @endpush
 
@@ -183,6 +190,10 @@
                     return color(name);
                 })
                 .text(function (d) { return d.text; });
+        svg.selectAll(".value-legend-circle")
+                .data(keys)
+                .enter().append("circle")
+                .attr("class", function (name) { return name + " value-legend-circle"; });
         svg.on('mousemove', function () {
             var pos = d3.mouse(svg.node()),
                     x = pos[0], y = pos[1],
@@ -192,11 +203,12 @@
             d3.select(".value-selector").attr("x", x);
             d3.select(".value-legend .date").text("Date: " + longDateFormat(date));
 
+            var value0 = 0;
             keys.map(function (name) {
-                var text, check_date = new Date(date.getTime()), check_date_formatted = dateFormatted;
+                var value = 0, check_date = new Date(date.getTime()), check_date_formatted = dateFormatted;
 
                 if (project_data[name].hasOwnProperty(check_date_formatted)) {
-                    text = textMap(name) + ": " + numberFormat(project_data[name][check_date_formatted]);
+                    value = project_data[name][check_date_formatted];
                 }
                 else {
                     // We don't have the value we want for this day. Go back in the
@@ -205,12 +217,17 @@
                         check_date.setDate(check_date.getDate() - 1);
                         check_date_formatted = dateFormat(check_date);
                         if (project_data[name].hasOwnProperty(check_date_formatted)) {
-                            text = textMap(name) + ": " + numberFormat(project_data[name][check_date_formatted]);
+                            value = project_data[name][check_date_formatted];
                             break;
                         }
                     }
                 }
-                d3.select(".value-legend ." + name).text(text);
+                value0 += value;
+                d3.select(".value-legend-text." + name).text(textMap(name) + ": " + numberFormat(value));
+                d3.select(".value-legend-circle." + name)
+                        .attr("cx", x)
+                        .attr("cy", yScale(value0))
+                        .attr("r", 3);
             });
         });
     };
