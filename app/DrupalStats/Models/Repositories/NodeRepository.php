@@ -102,8 +102,10 @@ class NodeRepository extends RepositoryBase
         }
         elseif (in_array($key, $keys_files)) {
             foreach ($value as $i => $item) {
-                unset($value[$i]->file->uri);
-                unset($value[$i]->file->resource);
+                if (isset($value[$i]->file)) {
+                    unset($value[$i]->file->uri);
+                    unset($value[$i]->file->resource);
+                }
             }
         }
         elseif (in_array($key, $keys_make_int)) {
