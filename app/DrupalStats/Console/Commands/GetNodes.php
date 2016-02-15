@@ -35,10 +35,12 @@ class GetNodes extends GetCommandBase
      */
     public function handle()
     {
+        $options = [];
         $params = $this->getQueryFromOptions();
         if ($type = $this->argument('type')) {
             $params['type'] = $type;
+            $options['type'] = $type;
         }
-        $this->dispatch(new RetrieveNodeCollectionJob(new NodeCollectionRequest($params)));
+        $this->dispatch(new RetrieveNodeCollectionJob(new NodeCollectionRequest($params), $options));
     }
 }

@@ -30,7 +30,7 @@ class RetrievePiftCiJobCollectionJob extends RetrieveJobBase
 
         // Save the maximum updated value in options as we won't have the actual
         // maximum when parsing later pages.
-        $max_updated = !empty($this->options['max_updated']) ? $this->options['max_updated'] : null;
+        $max_updated = $this->getMaxUpdated();
         $hit_last_updated = false;
 
         /** @var PiftCiJob $job */

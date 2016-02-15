@@ -6,6 +6,7 @@
 
 namespace App\DrupalStats\Jobs;
 
+use App\DrupalStats\Models\Entities\JobStatus;
 use App\DrupalStats\Models\Entities\Term;
 use App\DrupalStats\Models\Repositories\NodeRepository;
 use Hussainweb\DrupalApi\Client;
@@ -30,8 +31,18 @@ class RetrieveNodeCollectionJob extends RetrieveJobBase
         $collection = $client->getEntity($this->request);
         $repo = new NodeRepository();
 
+        // Save the maximum updated value in options as we won't have the actual
+        // maximum when parsing later pages.
+        $max_updated = $this->getMaxUpdated();
+        $hit_last_updated = false;
+
         /** @var Node $node */
         foreach ($collection as $node) {
+            $max_updated = ($max_updated < $node->changed) ? $node->changed : $max_updated;
+            if (!empty($this->options['last_updated']) && $node->changed < $this->options['last_updated']) {
+                $hit_last_updated = true;
+                break;
+            }
             $repo->saveEntity($node);
         }
 
@@ -47,10 +58,20 @@ class RetrieveNodeCollectionJob extends RetrieveJobBase
             $this->dispatch(new RetrieveFieldReleaseJob(new FieldCollectionRequest($release)));
         }
 
-        if ($next_url = $collection->getNextLink()) {
+        if (!$hit_last_updated && $next_url = $collection->getNextLink()) {
             $next_url_params = [];
             parse_str($next_url->getQuery(), $next_url_params);
+            $this->options['max_updated'] = $max_updated;
             $this->dispatch(new RetrieveNodeCollectionJob(new NodeCollectionRequest($next_url_params), $this->options));
+        }
+        else {
+            if (!empty($this->options['last_updated']) && $job_status = JobStatus::find('nodes-' . $this->getOption('type', ''))) {
+                echo sprintf("Completed retrieving nodes from %s.\n",
+                  date('Y-m-d H:i:s', $this->options['last_updated']));
+                $job_status->queued = false;
+                $job_status->last_updated = $max_updated;
+                $job_status->save();
+            }
         }
     }
 }

@@ -13,7 +13,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Jenssegers\Mongodb\Eloquent\Model;
 
 abstract class RetrieveJobBase extends Job implements ShouldQueue
 {
@@ -36,5 +35,15 @@ abstract class RetrieveJobBase extends Job implements ShouldQueue
     {
         $this->request = $request;
         $this->options = $options;
+    }
+
+    protected function getOption($name, $default = null)
+    {
+        return !empty($this->options[$name]) ? $this->options[$name] : $default;
+    }
+
+    protected function getMaxUpdated()
+    {
+        return $this->getOption('max_updated');
     }
 }
