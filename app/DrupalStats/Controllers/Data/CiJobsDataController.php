@@ -7,7 +7,7 @@
 namespace App\DrupalStats\Controllers\Data;
 
 use App\DrupalStats\Jobs\RetrievePiftCiJobCollectionJob;
-use App\DrupalStats\Models\Entities\JobStatus;
+use App\DrupalStats\Models\Services\JobStatusService;
 use App\Http\Controllers\Controller;
 use Hussainweb\DrupalApi\Request\Collection\PiftCiJobCollectionRequest;
 use Illuminate\Support\Facades\DB;
@@ -140,17 +140,9 @@ class CiJobsDataController extends Controller
         ]);
     }
 
-    public function cijobsRefresh(JobStatus $job_status)
+    public function cijobsRefresh(JobStatusService $job_status_service)
     {
-        $job = $job_status::find('pift_ci_jobs');
-
-        if (!empty($job->queued)) {
-            return response()->json([
-                'message' => 'The request is already queued. You should see updates soon.',
-            ])->setStatusCode(406);
-        }
-
-        if (!$job) {
+        $job = $job_status_service->getJobStatus('pift_ci_jobs', function () {
             /** @var Database $db */
             $db = DB::getMongoDB();
 
@@ -158,10 +150,13 @@ class CiJobsDataController extends Controller
                 'sort' => ['updated' => -1],
                 'limit' => 1,
             ]);
+            return $last_job->updated;
+        });
 
-            $job = new JobStatus();
-            $job->_id = 'pift_ci_jobs';
-            $job->last_updated = $last_job->updated;
+        if (!empty($job->queued)) {
+            return response()->json([
+                'message' => 'The request is already queued. You should see updates soon.',
+            ])->setStatusCode(406);
         }
 
         $req = new PiftCiJobCollectionRequest([
