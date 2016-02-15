@@ -19,7 +19,7 @@ class GetNodes extends GetCommandBase
      *
      * @var string
      */
-    protected $signature = 'druget:nodes {type : Node type to retrieve}';
+    protected $signature = 'dsget:nodes {type : Node type to retrieve}';
 
     /**
      * The console command description.

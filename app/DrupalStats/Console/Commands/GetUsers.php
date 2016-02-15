@@ -19,7 +19,7 @@ class GetUsers extends GetCommandBase
      *
      * @var string
      */
-    protected $signature = 'druget:users';
+    protected $signature = 'dsget:users';
 
     /**
      * The console command description.

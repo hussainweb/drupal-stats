@@ -19,7 +19,7 @@ class GetTerms extends GetCommandBase
      *
      * @var string
      */
-    protected $signature = 'druget:terms';
+    protected $signature = 'dsget:terms';
 
     /**
      * The console command description.

@@ -19,7 +19,7 @@ class GetPiftCiJob extends GetCommandBase
      *
      * @var string
      */
-    protected $signature = 'druget:cijobs';
+    protected $signature = 'dsget:cijobs';
 
     /**
      * The console command description.
