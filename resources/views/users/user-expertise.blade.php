@@ -28,7 +28,7 @@
                 .text(function (d) { return d.expertise; })
                 .font("Impact")
                 .fontSize(function (d) { return logScale(d.count); })
-                .rotate(function () { return (~~(Math.random() * 2) - 1) * 90; })
+                .rotate(function () { return (~~(Math.random() * 6) - 3) * 30; })
                 .spiral('rectangular')
                 .on('word', function (word) {
                     words.push(word);
