@@ -7,6 +7,7 @@ use App\DrupalStats\Console\Commands\GetPiftCiJob;
 use App\DrupalStats\Console\Commands\GetTerms;
 use App\DrupalStats\Console\Commands\GetUsers;
 use App\DrupalStats\Console\Commands\UpdateNodes;
+use App\DrupalStats\Console\Commands\UpdatePiftCiJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,6 +25,7 @@ class Kernel extends ConsoleKernel
         GetUsers::class,
         GetPiftCiJob::class,
         UpdateNodes::class,
+        UpdatePiftCiJob::class,
     ];
 
     /**

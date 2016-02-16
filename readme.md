@@ -18,6 +18,7 @@ php artisan dsget:cijobs
 php artisan dsget:users
 php artisan dsget:terms
 php artisan dsupdate:nodes {type}
+php artisan dsupdate:cijobs
 ~~~
 
 All the `dsget` commands have the following options.
