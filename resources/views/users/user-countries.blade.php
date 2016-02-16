@@ -26,6 +26,24 @@
         stroke-width: 1.5px;
     }
 
+    .country-tooltip rect {
+        fill: #ffffff;
+        opacity: 0.8;
+        stroke-width: 1px;
+        stroke: #333333;
+        border-radius: 5px;
+    }
+
+    .country-tooltip text {
+        font-family: 'Maven Pro';
+        font-weight: 700;
+    }
+
+    .country-tooltip .country-name {
+        fill: #006600;
+        font-size: 24px;
+    }
+
 </style>
 @endpush
 
@@ -101,8 +119,30 @@
                     .attr("fill", function (d) { return color(d.count); })
                     .attr("class", function (d) { return "country " + d.country; });
 
-            country.append("title")
-                    .text(function (d) { return d.countryName + ": " + format(d.count); });
+            var tooltip = svg.append('g').attr('class', 'country-tooltip');
+            tooltip.append('rect');
+            tooltip.append('text').attr('class', 'country-name').attr('x', 10).attr('y', 25);
+            tooltip.append('text').attr('class', 'country-users-count').attr('x', 10).attr('y', 50);
+
+            country.on('mouseover', function () {
+                var pos = d3.mouse(svg.node()),
+                        x = pos[0], y = pos[1],
+                        d = d3.select(this).data()[0],
+                        ttwidth = 30 + (d.countryName.length * 13), ttheight = 60;
+
+                // Detect if the tooltip would go outside the svg.
+                if (x > width - ttwidth) { x -= ttwidth; }
+                if (y > 500) { y -= ttheight; }
+
+                tooltip.transition().attr('transform', 'translate(' + x + ',' + y + ')');
+                tooltip.select('rect')
+                        .transition()
+                        .attr('width', ttwidth)
+                        .attr('height', ttheight);
+
+                tooltip.select('.country-name').text(d.countryName);
+                tooltip.select('.country-users-count').text(format(d.count) + " users");
+            });
 
             var logLegend = d3.legend.color()
                     .cells([10, 100, 1000, 10000, 100000, 1000000])

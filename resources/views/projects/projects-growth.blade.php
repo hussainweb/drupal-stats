@@ -143,16 +143,6 @@
         xScale.domain(d3.extent(dates, function (d) { return dateFormat.parse(d); }));
         yScale.domain([0, sum]);
 
-        var project = svg.selectAll(".project")
-                .data(projects)
-                .enter().append("g")
-                .attr("class", "project");
-
-        project.append("path")
-                .attr("class", "area")
-                .attr("d", function(d) { return area(d.values); })
-                .style("fill", function(d) { return color(d.name); });
-
         svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")")
@@ -163,6 +153,16 @@
                 .attr("class", "y axis")
                 .call(yAxis)
                 .append('rect').attr('x', 0).attr('y', 0).attr('width', 2).attr('height', height);
+
+        var project = svg.selectAll(".project")
+                .data(projects)
+                .enter().append("g")
+                .attr("class", "project");
+
+        project.append("path")
+                .attr("class", "area")
+                .attr("d", function(d) { return area(d.values); })
+                .style("fill", function(d) { return color(d.name); });
 
         // Show the arc line.
         svg.append('rect')
@@ -252,7 +252,6 @@
         <label><input class="project-type" onclick="selectProjectTypes()" type="checkbox" name="project_distribution" checked> Distribution</label>
         <label><input class="project-type" onclick="selectProjectTypes()" type="checkbox" name="project_core" checked> Core</label>
         <label><input class="project-type" onclick="selectProjectTypes()" type="checkbox" name="project_theme_engine" checked> Theme Engines</label>
-        {{--<button class="btn btn-warning" onclick="sendRefresh();">Refresh Data</button>--}}
     </div>
 @endsection
 
