@@ -29,6 +29,16 @@ All the `dsget` commands have the following options.
 
 All `dsget` commands start at the specified page (defaults to 0) and continue accessing the subsequent pages until it reaches the end. This is only required for initial setup or if you want to reset all data in the database. Normally, you would use `dsupdate` commands to retrieve fresh content.
 
+### Schedule updates
+
+The application adds schedules to run various update commands at daily intervals at different times. A single cron job is required to allow Laravel to run this schedule.
+
+~~~
+* * * * * php /path/to/artisan schedule:run
+~~~
+
+See [Laravel's documentation](https://laravel.com/docs/5.2/scheduling#introduction) for more details.
+
 ## Requirements
 
 The application needs the following software to run.

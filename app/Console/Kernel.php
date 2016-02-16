@@ -36,7 +36,16 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')
-                 ->hourly();
+        $schedule->command('dsupdate:nodes project_release')->dailyAt('23:00');
+        $schedule->command('dsupdate:nodes project_module')->dailyAt('1:00');
+        $schedule->command('dsupdate:nodes project_theme')->dailyAt('1:30');
+        $schedule->command('dsupdate:nodes project_theme_engine')->dailyAt('2:00');
+        $schedule->command('dsupdate:nodes project_theme_drupalorg')->dailyAt('2:10');
+        $schedule->command('dsupdate:nodes project_core')->dailyAt('2:20');
+        $schedule->command('dsupdate:nodes project_distribution')->dailyAt('2:30');
+        $schedule->command('dsupdate:nodes organization')->dailyAt('2:40');
+        $schedule->command('dsupdate:nodes casestudy')->dailyAt('2:50');
+        $schedule->command('dsupdate:nodes book')->dailyAt('3:00');
+        $schedule->command('dsupdate:nodes project_issue')->dailyAt('3:30');
     }
 }
