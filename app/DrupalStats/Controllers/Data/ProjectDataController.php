@@ -14,6 +14,11 @@ use MongoDB\Database;
 class ProjectDataController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('data.cache');
+    }
+
     public function moduleDownloads(Request $request)
     {
         /** @var Database $db */

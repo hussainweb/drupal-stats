@@ -14,6 +14,11 @@ use MongoDB\Database;
 class UserDataController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('data.cache');
+    }
+
     public function userLanguages()
     {
         /** @var Database $db */

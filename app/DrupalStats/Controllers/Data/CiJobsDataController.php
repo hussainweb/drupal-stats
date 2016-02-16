@@ -16,6 +16,15 @@ use MongoDB\Database;
 class CiJobsDataController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('data.cache', [
+            'except' => [
+                'cijobsRefresh',
+            ],
+        ]);
+    }
+
     public function cijobsBranchStatus()
     {
         /** @var Database $db */
