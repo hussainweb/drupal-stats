@@ -128,7 +128,7 @@
                 var pos = d3.mouse(svg.node()),
                         x = pos[0], y = pos[1],
                         d = d3.select(this).data()[0],
-                        ttwidth = 30 + (d.countryName.length * 13), ttheight = 60;
+                        ttwidth = 50 + (d.countryName.length * 13), ttheight = 60;
 
                 // Detect if the tooltip would go outside the svg.
                 if (x > width - ttwidth) { x -= ttwidth; }
