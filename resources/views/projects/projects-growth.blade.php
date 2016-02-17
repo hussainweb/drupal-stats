@@ -213,6 +213,7 @@
                 else {
                     // We don't have the value we want for this day. Go back in the
                     // array to see if we can find one.
+                    var selected_date_formatted = check_date_formatted;
                     while (check_date.getFullYear() > 2002) {
                         check_date.setDate(check_date.getDate() - 1);
                         check_date_formatted = dateFormat(check_date);
@@ -221,6 +222,8 @@
                             break;
                         }
                     }
+                    // Save it so that the next lookup is marginally faster.
+                    project_data[name][selected_date_formatted] = value;
                 }
                 value0 += value;
                 d3.select(".value-legend-text." + name).text(textMap(name) + ": " + numberFormat(value));
