@@ -132,10 +132,10 @@
                 var text = tooltip.select('.country-name').text(d.countryName);
                 tooltip.select('.country-users-count').text(format(d.count) + " users");
 
-                var ttwidth = Math.max(20 + text[0][0].getComputedTextLength(), 100), ttheight = 60;
+                var ttwidth = Math.max(20 + text[0][0].getComputedTextLength(), 120), ttheight = 60;
 
                 // Detect if the tooltip would go outside the svg.
-                if (x > width - ttwidth) { x -= ttwidth; }
+                if (x > width - ttwidth) { x = width - ttwidth; }
                 if (y > 500) { y -= ttheight; }
 
                 tooltip.transition().attr('transform', 'translate(' + x + ',' + y + ')');

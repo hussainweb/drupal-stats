@@ -184,7 +184,7 @@
             var ttwidth = Math.max(20 + text[0][0].getComputedTextLength(), 100), ttheight = 60;
 
             // Detect if the tooltip would go outside the svg.
-            if (x > width - ttwidth) { x -= ttwidth; }
+            if (x > width - ttwidth) { x = width - ttwidth; }
             if (y > 500) { y -= ttheight; }
 
             tooltip.transition().attr('transform', 'translate(' + x + ',' + y + ')');

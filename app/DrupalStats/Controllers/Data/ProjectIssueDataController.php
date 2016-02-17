@@ -26,7 +26,7 @@ class ProjectIssueDataController extends Controller
         3 => 'closed (duplicate)',
         4 => 'postponed',
         5 => 'closed (won\'t fix)',
-        6 => 'closed (works as designed',
+        6 => 'closed (works as designed)',
         7 => 'closed (fixed)',
         8 => 'needs review',
         13 => 'needs work',
