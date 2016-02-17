@@ -105,6 +105,7 @@ This application is built using Laravel and many languages and technologies. It 
 * Laravel MongoDB model - [MIT](https://github.com/jenssegers/laravel-mongodb/blob/master/composer.json)
 * Pheanstalk - [MIT](https://github.com/pda/pheanstalk/blob/master/LICENSE)
 * Artisan Beans - [MIT](https://github.com/pmatseykanets/artisan-beans/blob/master/LICENSE.txt)
+* PHP Markdown Lib - [BSD-3-Clause](https://github.com/michelf/php-markdown/blob/lib/License.md)
 * Bootstrap - [MIT](https://github.com/twbs/bootstrap/blob/master/LICENSE)
 * d3.js - [BSD License](https://github.com/mbostock/d3/blob/master/LICENSE)
 * d3-legend - [Permissive License](https://github.com/susielu/d3-legend/blob/master/LICENSE)

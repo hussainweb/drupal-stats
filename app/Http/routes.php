@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/about', '\App\DrupalStats\Controllers\MarkdownPageController@aboutPage');
+
 Route::get('/viz/module-downloads', '\App\DrupalStats\Controllers\Visualizations\ProjectPageController@moduleDownloads');
 Route::get('/viz/projects-growth', '\App\DrupalStats\Controllers\Visualizations\ProjectPageController@projectsGrowth');
 Route::get('/data/module-downloads', '\App\DrupalStats\Controllers\Data\ProjectDataController@moduleDownloads');
