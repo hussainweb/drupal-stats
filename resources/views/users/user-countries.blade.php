@@ -127,8 +127,12 @@
             country.on('mouseover', function () {
                 var pos = d3.mouse(svg.node()),
                         x = pos[0], y = pos[1],
-                        d = d3.select(this).data()[0],
-                        ttwidth = 50 + (d.countryName.length * 13), ttheight = 60;
+                        d = d3.select(this).data()[0];
+
+                var text = tooltip.select('.country-name').text(d.countryName);
+                tooltip.select('.country-users-count').text(format(d.count) + " users");
+
+                var ttwidth = Math.max(20 + text[0][0].getComputedTextLength(), 100), ttheight = 60;
 
                 // Detect if the tooltip would go outside the svg.
                 if (x > width - ttwidth) { x -= ttwidth; }
@@ -139,9 +143,6 @@
                         .transition()
                         .attr('width', ttwidth)
                         .attr('height', ttheight);
-
-                tooltip.select('.country-name').text(d.countryName);
-                tooltip.select('.country-users-count').text(format(d.count) + " users");
             });
 
             var logLegend = d3.legend.color()

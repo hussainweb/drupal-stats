@@ -33,7 +33,7 @@
 
     .issue-tooltip .issue-type-name {
         fill: #006600;
-        font-size: 24px;
+        font-size: 18px;
     }
 </style>
 @endpush
@@ -167,6 +167,7 @@
         legendGroup.select(".legendStatus")
                 .call(legendStatus);
 
+        // Draw the tooltip
         var tooltip = svg.append('g').attr('class', 'issue-tooltip');
         tooltip.append('rect');
         tooltip.append('text').attr('class', 'issue-type-name').attr('x', 10).attr('y', 25);
@@ -175,8 +176,12 @@
         d3.selectAll(".arc").on('mouseover', function () {
             var pos = d3.mouse(svg.node()),
                     x = pos[0], y = pos[1],
-                    d = d3.select(this).data()[0].data,
-                    ttwidth = Math.max(20 + (d.fullText.length * 12), 100), ttheight = 60;
+                    d = d3.select(this).data()[0].data;
+
+            var text = tooltip.select('.issue-type-name').text(d.fullText);
+            tooltip.select('.issue-count').text(format(d.count) + " issues");
+
+            var ttwidth = Math.max(20 + text[0][0].getComputedTextLength(), 100), ttheight = 60;
 
             // Detect if the tooltip would go outside the svg.
             if (x > width - ttwidth) { x -= ttwidth; }
@@ -187,9 +192,6 @@
                     .transition()
                     .attr('width', ttwidth)
                     .attr('height', ttheight);
-
-            tooltip.select('.issue-type-name').text(d.fullText);
-            tooltip.select('.issue-count').text(format(d.count) + " issues");
         });
     });
 
