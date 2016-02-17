@@ -51,7 +51,7 @@
     var colorCategory = d3.scale.category10();
     var colorPriority = d3.scale.ordinal()
             .domain(['Minor', 'Normal', 'Major', 'Critical'])
-            .range(['#d0d0d0', '#80d080', '#ff8080', '#800000']);
+            .range(['#d0d0d0', '#80d080', '#ff8080', '#b00000']);
     var colorStatus = d3.scale.category20b();
 
     var arcCategory = d3.svg.arc()
@@ -222,7 +222,7 @@
 
 @section('svgcontent')
     <div class="panel panel-body">
-        <h2>Project Issues Breakup</h2>
+        <h2>Project Issues Breakdown</h2>
         <p>This pie chart shows a break-down of all issues across all projects or for a specific project. The inner-most donut shows the category of the issue. The middle one shows the priority for each of those categories and the last one shows the status for each of the issues under that category and priority.</p>
         <p>To change the project, simply type the drupal.org project machine name and 'Submit' and the page will reload with data for that project.</p>
     </div>
