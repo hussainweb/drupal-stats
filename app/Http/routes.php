@@ -35,6 +35,9 @@ Route::get('/data/user-languages', '\App\DrupalStats\Controllers\Data\UserDataCo
 Route::get('/data/user-expertise', '\App\DrupalStats\Controllers\Data\UserDataController@userExpertise');
 Route::get('/data/user-countries', '\App\DrupalStats\Controllers\Data\UserDataController@userCountries');
 
+Route::get('/viz/issues/{name?}', '\App\DrupalStats\Controllers\Visualizations\ProjectIssuePageController@projectIssueBreakup');
+Route::get('/data/issues/{name?}', '\App\DrupalStats\Controllers\Data\ProjectIssueDataController@projectIssueBreakup');
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
