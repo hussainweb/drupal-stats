@@ -18,8 +18,10 @@ Route::get('/', function () {
 Route::get('/about', '\App\DrupalStats\Controllers\MarkdownPageController@aboutPage');
 
 Route::get('/viz/module-downloads', '\App\DrupalStats\Controllers\Visualizations\ProjectPageController@moduleDownloads');
+Route::get('/viz/project-downloads', '\App\DrupalStats\Controllers\Visualizations\ProjectPageController@projectDownloads');
 Route::get('/viz/projects-growth', '\App\DrupalStats\Controllers\Visualizations\ProjectPageController@projectsGrowth');
 Route::get('/data/module-downloads', '\App\DrupalStats\Controllers\Data\ProjectDataController@moduleDownloads');
+Route::get('/data/project-downloads', '\App\DrupalStats\Controllers\Data\ProjectDataController@projectDownloads');
 Route::get('/data/projects-growth', '\App\DrupalStats\Controllers\Data\ProjectDataController@projectsGrowth');
 
 Route::get('/viz/ci-jobs', '\App\DrupalStats\Controllers\Visualizations\CiJobPageController@cijobStatus');

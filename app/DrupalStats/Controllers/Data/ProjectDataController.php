@@ -67,6 +67,51 @@ class ProjectDataController extends Controller
         return response()->json($nodes);
     }
 
+    public function projectDownloads(Request $request)
+    {
+        /** @var Database $db */
+        $db = DB::getMongoDB();
+
+        $nodes = $db->nodes->find(
+          [
+              'type' => ['$in' => [
+                  'project_module',
+                  'project_theme',
+                  'project_core',
+                  'project_distribution',
+                  'project_theme_engine',
+                  'project_drupalorg',
+              ]],
+          ], [
+              'projection' => [
+                  'title' => 1,
+                  'field_download_count' => 1,
+                  'type' => 1,
+                  'field_project_machine_name' => 1,
+              ],
+              'sort' => ['field_download_count' => -1],
+              'limit' => 200,
+          ]
+        )->toArray();
+
+        $terms = [];
+        $nodes = array_map(function ($node) use ($db, &$terms) {
+            $res = [
+              'id' => $node->_id,
+              'title' => $node->title,
+              'machine_name' => $node->field_project_machine_name,
+              'value' => $node->field_download_count,
+              'type' => $node->type,
+            ];
+
+            return $res;
+        }, $nodes);
+
+        shuffle($nodes);
+
+        return response()->json($nodes);
+    }
+
     public function projectsGrowth()
     {
         /** @var Database $db */
