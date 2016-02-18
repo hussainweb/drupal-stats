@@ -25,12 +25,10 @@
     var color = d3.scale.category10();
 
     var legendOrdinal = d3.legend.color()
-            //d3 symbol creates a path-string, for example
-            //"M0,-8.059274488676564L9.306048591020996,
-            //8.059274488676564 -9.306048591020996,8.059274488676564Z"
             .shape("path", d3.svg.symbol().type("circle").size(100)())
             .shapePadding(10)
-            .scale(color);
+            .scale(color)
+            .title("Job Status");
 
     d3.json('{{ url('data/ci-jobs') }}', function (error, data) {
         if (error) {

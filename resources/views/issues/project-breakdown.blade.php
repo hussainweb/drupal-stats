@@ -85,15 +85,18 @@
     var legendCategory = d3.legend.color()
             .shape("path", d3.svg.symbol().type("circle").size(100)())
             .shapePadding(10)
-            .scale(colorCategory);
+            .scale(colorCategory)
+            .title("Category");
     var legendPriority = d3.legend.color()
             .shape("path", d3.svg.symbol().type("circle").size(100)())
             .shapePadding(10)
-            .scale(colorPriority);
+            .scale(colorPriority)
+            .title("Priority");
     var legendStatus = d3.legend.color()
             .shape("path", d3.svg.symbol().type("circle").size(100)())
             .shapePadding(10)
-            .scale(colorStatus);
+            .scale(colorStatus)
+            .title("Status");
     var format = d3.format(",2d");
 
     d3.json('{{ url('data/issues/' . $project_name) }}', function (error, data) {
