@@ -77,6 +77,12 @@
             <div class="navbar-text pull-left">
                 Drupal is a <a href="http://drupal.com/trademark" target="_blank">registered trademark</a> of <a href="http://buytaert.net/" target="_blank">Dries Buytaert</a>.
             </div>
+            <div class="navbar-text pull-right">
+                <a href="https://twitter.com/hussainweb"><i class="fa fa-twitter-square fa-2x"></i></a>
+                <a href="https://plus.google.com/+HusainD/"><i class="fa fa-google-plus-square fa-2x"></i></a>
+                <a href="https://in.linkedin.com/in/husainad"><i class="fa fa-linkedin-square fa-2x"></i></a>
+                <a href="https://www.facebook.com/hussainweb"><i class="fa fa-facebook-square fa-2x"></i></a>
+            </div>
         </div>
     </footer>
 
