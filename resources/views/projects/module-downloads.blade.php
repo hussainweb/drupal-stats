@@ -1,5 +1,14 @@
 @extends('layouts.svg')
 
+@push('styles')
+<style>
+    .node.hover circle {
+        stroke-width: 2px;
+        stroke: #ff0000;
+    }
+</style>
+@endpush
+
 @push('scripts')
     <script src="//d3js.org/d3.v3.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.8.0/d3-legend.js" charset="utf-8"></script>
@@ -21,11 +30,24 @@
 
         svg = svgRoot.append('g').attr('transform', 'translate(' + legendWidth + ', 0)');
 
+        var classNameNormalize = function (classname) {
+            return classname.toLowerCase().split(/[ \(\)]/).join("-");
+        };
+
         var legendOrdinal = d3.legend.color()
                 .shape("path", d3.svg.symbol().type("circle").size(100)())
                 .shapePadding(10)
                 .scale(color)
-                .title("Categories");
+                .title("Category")
+                .on("cellover", function (d) {
+                    console.log(d);
+                    d3.selectAll(".node." + classNameNormalize(d))
+                            .classed("hover", true);
+                })
+                .on("cellout", function (d) {
+                    d3.selectAll(".node." + classNameNormalize(d))
+                            .classed("hover", false);
+                });
 
         function graph(order) {
             svg.selectAll('.node').remove();
@@ -40,7 +62,7 @@
                         .data(bubble.nodes({ children: data })
                                 .filter(function (d) { return !d.children; }))
                         .enter().append("g")
-                        .attr("class", "node")
+                        .attr("class", function (d) { return "node " + classNameNormalize(d.category); })
                         .attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
 
                 node.append("title")

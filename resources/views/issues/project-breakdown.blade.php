@@ -11,6 +11,10 @@
         stroke: #ffffff;
         stroke-width: 2px;
     }
+    .arc.hover {
+        stroke: #ff0000;
+        stroke-width: 4px;
+    }
     .project-name {
         font-family: 'Maven Pro';
         font-weight: 700;
@@ -82,21 +86,34 @@
     var pieGroup = svg.append("g")
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
+    var classNameNormalize = function (classname) {
+        return classname ? classname.toLowerCase().split(/[ \(\)]/).join("-") : '';
+    };
+    var setHoverClass = function (classname, value) {
+        d3.selectAll(".arc." + classNameNormalize(classname)).classed("hover", value);
+    };
+
     var legendCategory = d3.legend.color()
             .shape("path", d3.svg.symbol().type("circle").size(100)())
             .shapePadding(10)
             .scale(colorCategory)
-            .title("Category");
+            .title("Category")
+            .on("cellover", function (d) { setHoverClass(d, true); })
+            .on("cellout", function (d) { setHoverClass(d, false); });
     var legendPriority = d3.legend.color()
             .shape("path", d3.svg.symbol().type("circle").size(100)())
             .shapePadding(10)
             .scale(colorPriority)
-            .title("Priority");
+            .title("Priority")
+            .on("cellover", function (d) { setHoverClass(d, true); })
+            .on("cellout", function (d) { setHoverClass(d, false); });
     var legendStatus = d3.legend.color()
             .shape("path", d3.svg.symbol().type("circle").size(100)())
             .shapePadding(10)
             .scale(colorStatus)
-            .title("Status");
+            .title("Status")
+            .on("cellover", function (d) { setHoverClass(d, true); })
+            .on("cellout", function (d) { setHoverClass(d, false); });
     var format = d3.format(",2d");
 
     d3.json('{{ url('data/issues/' . $project_name) }}', function (error, data) {
@@ -129,7 +146,7 @@
         var gCategory = pieGroup.selectAll(".arc.category")
                 .data(pie(data.category))
                 .enter().append("g")
-                .attr("class", "arc category");
+                .attr("class", function (d) { return "arc category " + classNameNormalize(d.data.text); });
         gCategory.append("path")
                 .attr("d", arcCategory)
                 .style("fill", function(d) { return colorCategory(d.data.text); });
@@ -137,7 +154,7 @@
         var gPriority = pieGroup.selectAll(".arc.priority")
                 .data(pie(data.priority))
                 .enter().append("g")
-                .attr("class", "arc priority");
+                .attr("class", function (d) { return "arc category " + classNameNormalize(d.data.text); });
         gPriority.append("path")
                 .attr("d", arcPriority)
                 .style("fill", function(d) { return colorPriority(d.data.text); });
@@ -145,7 +162,7 @@
         var gStatus = pieGroup.selectAll(".arc.status")
                 .data(pie(data.status))
                 .enter().append("g")
-                .attr("class", "arc status");
+                .attr("class", function (d) { return "arc category " + classNameNormalize(d.data.text); });
         gStatus.append("path")
                 .attr("d", arcStatus)
                 .style("fill", function(d) { return colorStatus(d.data.text); });
