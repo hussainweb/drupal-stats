@@ -49,6 +49,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('dsupdate:nodes casestudy')->dailyAt('2:50');
         $schedule->command('dsupdate:nodes book')->dailyAt('3:00');
         $schedule->command('dsupdate:nodes project_issue')->dailyAt('3:30');
-        $schedule->command('dsget:new-users')->dailyAt('4:30');
+//        $schedule->command('dsget:new-users')->dailyAt('4:30');
     }
 }
