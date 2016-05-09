@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\DrupalStats\Console\Commands\GetNewUsers;
 use App\DrupalStats\Console\Commands\GetNodes;
 use App\DrupalStats\Console\Commands\GetPiftCiJob;
 use App\DrupalStats\Console\Commands\GetTerms;
@@ -20,6 +21,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\Inspire::class,
+        GetNewUsers::class,
         GetNodes::class,
         GetTerms::class,
         GetUsers::class,
@@ -47,5 +49,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('dsupdate:nodes casestudy')->dailyAt('2:50');
         $schedule->command('dsupdate:nodes book')->dailyAt('3:00');
         $schedule->command('dsupdate:nodes project_issue')->dailyAt('3:30');
+        $schedule->command('dsget:new-users')->dailyAt('4:30');
     }
 }
