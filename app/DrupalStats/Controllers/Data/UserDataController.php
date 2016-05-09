@@ -166,7 +166,6 @@ class UserDataController extends Controller
                 '$group' => [
                     '_id' => [
                         'day' => '$ts',
-                        'project_type' => '$type',
                     ],
                     'count' => ['$sum' => 1],
                 ],
