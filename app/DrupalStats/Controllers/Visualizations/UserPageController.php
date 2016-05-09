@@ -28,6 +28,18 @@ class UserPageController extends Controller
 
     public function userGrowth()
     {
-        return view('users/user-growth', ['title' => 'User Growth']);
+        $values = [
+            'title' => 'User Growth',
+            'data_url' => url('data/user-growth'),
+            'data_types' => [
+                'total' => 'Total',
+            ],
+            'default_data_types' => [
+                'total',
+            ],
+            'show_filter' => false,
+            'y_number_format' => '2s',
+        ];
+        return view('users/user-growth', $values);
     }
 }
