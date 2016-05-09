@@ -277,8 +277,8 @@
 @section('presvgcontent')
     @if (!empty($show_filter))
         <div class="col-sm-12">
-            @foreach ($data_types as $data_label => $data_type)
-                <label><input class="data-type" onclick="selectDataTypes()" type="checkbox" name="{{ $data_label }}" checked> {{ $data_type }}</label>
+            @foreach ($data_types as $data_type => $data_label)
+                <label><input class="data-type" onclick="selectDataTypes()" type="checkbox" name="{{ $data_type }}" {{ in_array($data_type, $default_data_types) ? "checked" : "" }}> {{ $data_label }}</label>
             @endforeach
         </div>
     @endif
