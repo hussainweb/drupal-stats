@@ -265,4 +265,92 @@ class UserDataController extends Controller
 
         return response()->json($users_count);
     }
+
+    public function userCountryGrowth()
+    {
+        /** @var Database $db */
+        $db = DB::getMongoDB();
+
+        $users = $db->users->aggregate([
+//            [
+//                '$match' => [
+//                    'field_country' => [
+//                        '$in' => [
+//                            'United States',
+//                            'India',
+//                            'Russian Federation',
+//                            'Germany',
+//                            'Spain',
+//                            'United Kingdom',
+//                            'Poland',
+//                            'Belgium',
+//                        ],
+//                    ],
+//                ],
+//            ],
+            [
+                '$project' => [
+                    '_id' => 0,
+                    'created' => 1,
+                    'field_country' => 1,
+                    'tsday' => [
+                        '$mod' => ['$created', 86400],
+                    ],
+                ],
+            ],
+            [
+                '$project' => [
+                    '_id' => 0,
+                    'field_country' => 1,
+                    'ts' => [
+                        '$subtract' => ['$created', '$tsday'],
+                    ],
+                ],
+            ],
+            [
+                '$group' => [
+                    '_id' => [
+                        'day' => '$ts',
+                        'country' => '$field_country',
+                    ],
+                    'count' => ['$sum' => 1],
+                ],
+            ],
+            [
+                '$sort' => ['_id.day' => 1],
+            ],
+        ]);
+
+        $users_count = [];
+        $last_timestamps = [];
+
+        $min_timestamp = mktime(0, 0, 0, 1, 1, 2000);
+        foreach ($users as $user) {
+            $country = $user->_id->country;
+            if (!$country) {
+                $country = "na";
+            }
+
+            $country = strtolower(str_replace(" ", "-", $country));
+            if (!isset($last_timestamps[$country])) {
+                $last_timestamps[$country] = 0;
+            }
+            if (!isset($users_count[$country])) {
+                $users_count[$country] = [];
+            }
+
+            // We can just save the last timestamp per each project type as the
+            // list is sorted by timestamp anyway.
+            $last_timestamps[$country] += $user->count;
+
+            // We don't return data for before 2000.
+            if ($user->_id->day < $min_timestamp) {
+                continue;
+            }
+
+            $users_count[$country][date('Y-m-d', $user->_id->day)] = $last_timestamps[$country];
+        }
+
+        return response()->json($users_count);
+    }
 }

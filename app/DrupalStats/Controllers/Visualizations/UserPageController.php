@@ -66,4 +66,17 @@ class UserPageController extends Controller
         ];
         return view('users/user-gender-growth', $values);
     }
+
+    public function userCountryGrowth()
+    {
+        $values = [
+            'title' => 'User Country Growth',
+            'data_url' => url('data/user-country-growth'),
+            'data_types' => [],
+            'default_data_types' => [],
+            'show_filter' => false,
+            'y_number_format' => '2s',
+        ];
+        return view('users/user-country-growth', $values);
+    }
 }
