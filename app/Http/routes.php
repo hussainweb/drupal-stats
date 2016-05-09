@@ -33,9 +33,11 @@ Route::get('/data/ci-jobs/refresh', '\App\DrupalStats\Controllers\Data\CiJobsDat
 Route::get('/viz/user-languages', '\App\DrupalStats\Controllers\Visualizations\UserPageController@userLanguages');
 Route::get('/viz/user-expertise', '\App\DrupalStats\Controllers\Visualizations\UserPageController@userExpertise');
 Route::get('/viz/user-countries', '\App\DrupalStats\Controllers\Visualizations\UserPageController@userCountries');
+Route::get('/viz/user-growth', '\App\DrupalStats\Controllers\Visualizations\UserPageController@userGrowth');
 Route::get('/data/user-languages', '\App\DrupalStats\Controllers\Data\UserDataController@userLanguages');
 Route::get('/data/user-expertise', '\App\DrupalStats\Controllers\Data\UserDataController@userExpertise');
 Route::get('/data/user-countries', '\App\DrupalStats\Controllers\Data\UserDataController@userCountries');
+Route::get('/data/user-growth', '\App\DrupalStats\Controllers\Data\UserDataController@userGrowth');
 
 Route::get('/viz/issues/{name?}', '\App\DrupalStats\Controllers\Visualizations\ProjectIssuePageController@projectIssueBreakup');
 Route::get('/data/issues/{name?}', '\App\DrupalStats\Controllers\Data\ProjectIssueDataController@projectIssueBreakup');

@@ -138,4 +138,61 @@ class UserDataController extends Controller
 
         return response()->json(array_values($countries));
     }
+
+    public function userGrowth()
+    {
+        /** @var Database $db */
+        $db = DB::getMongoDB();
+
+        $users = $db->users->aggregate([
+            [
+                '$project' => [
+                    '_id' => 0,
+                    'created' => 1,
+                    'tsday' => [
+                        '$mod' => ['$created', 86400],
+                    ],
+                ],
+            ],
+            [
+                '$project' => [
+                    '_id' => 0,
+                    'ts' => [
+                        '$subtract' => ['$created', '$tsday'],
+                    ],
+                ],
+            ],
+            [
+                '$group' => [
+                    '_id' => [
+                        'day' => '$ts',
+                        'project_type' => '$type',
+                    ],
+                    'count' => ['$sum' => 1],
+                ],
+            ],
+            [
+                '$sort' => ['_id.day' => 1],
+            ],
+        ]);
+
+        $users_count = [];
+        $last_timestamp_count = 0;
+
+        $min_timestamp = mktime(0, 0, 0, 1, 1, 2000);
+        foreach ($users as $user) {
+            // We can just save the last timestamp per each project type as the
+            // list is sorted by timestamp anyway.
+            $last_timestamp_count += $user->count;
+
+            // We don't return data for before 2000.
+            if ($user->_id->day < $min_timestamp) {
+                continue;
+            }
+
+            $users_count[date('Y-m-d', $user->_id->day)] = $last_timestamp_count;
+        }
+
+        return response()->json(['total' => $users_count]);
+    }
 }

@@ -25,4 +25,9 @@ class UserPageController extends Controller
     {
         return view('users/user-countries', ['title' => 'User - Countries']);
     }
+
+    public function userGrowth()
+    {
+        return view('users/user-growth', ['title' => 'User Growth']);
+    }
 }
