@@ -62,7 +62,7 @@
             .domain(userTypes);
     var textMap = d3.scale.ordinal()
             .domain(userTypes)
-            .range(["total"]);
+            .range(["Total"]);
 
     var xAxis = d3.svg.axis()
             .scale(xScale)
