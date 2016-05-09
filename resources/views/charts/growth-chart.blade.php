@@ -103,6 +103,15 @@
         }
 
         raw_data = data;
+
+        @if (count($data_types) == 0)
+        dataTypes = Object.keys(raw_data);
+        keys = Object.keys(raw_data);
+        color.domain(dataTypes);
+        textMap.range(dataTypes);
+        textMap.domain(dataTypes);
+        @endif
+
         drawAreaChart();
     });
 
@@ -275,7 +284,7 @@
 @endpush
 
 @section('presvgcontent')
-    @if (!empty($show_filter))
+    @if (!empty($show_filter) && count($data_types))
         <div class="col-sm-12">
             @foreach ($data_types as $data_type => $data_label)
                 <label><input class="data-type" onclick="selectDataTypes()" type="checkbox" name="{{ $data_type }}" {{ in_array($data_type, $default_data_types) ? "checked" : "" }}> {{ $data_label }}</label>
