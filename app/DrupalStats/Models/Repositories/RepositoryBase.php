@@ -30,10 +30,10 @@ abstract class RepositoryBase
         /** @var Model $item */
         $model = $this->getModel();
         $item = $model->findOrNew($entity->getId());
-        $item->_id = $entity->getId();
         foreach ($entity->getData() as $key => $value) {
             $item->$key = $this->processValue($key, $value);
         }
+        $item->_id = $entity->getId();
         $item->save();
     }
 

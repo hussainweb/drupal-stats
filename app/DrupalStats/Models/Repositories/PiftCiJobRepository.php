@@ -25,8 +25,9 @@ class PiftCiJobRepository extends RepositoryBase
     protected function processValue($key, $value)
     {
         $keys_make_int = [
-          'created',
-          'changed',
+            'job_id',
+            'created',
+            'changed',
         ];
 
         if (in_array($key, $keys_make_int)) {

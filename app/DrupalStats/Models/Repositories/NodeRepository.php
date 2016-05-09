@@ -55,6 +55,7 @@ class NodeRepository extends RepositoryBase
         ];
 
         $keys_make_int = [
+            'nid',
             'field_download_count',
             'created',
             'changed',

@@ -24,6 +24,11 @@ class FieldReleaseRepository extends RepositoryBase
      */
     protected function processValue($key, $value)
     {
+        $keys_make_int = [
+            'item_id',
+            'field_release_file_downloads',
+        ];
+
         if ($key == 'host_entity') {
             unset($value->uri);
         }
@@ -31,7 +36,7 @@ class FieldReleaseRepository extends RepositoryBase
             unset($value->file->uri);
             unset($value->file->resource);
         }
-        elseif ($key == 'field_release_file_downloads') {
+        elseif (in_array($key, $keys_make_int)) {
             $value = (int) $value;
         }
 

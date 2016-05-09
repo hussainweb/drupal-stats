@@ -34,6 +34,9 @@ class TermRepository extends RepositoryBase
                 unset($value[$i]->resource);
             }
         }
+        elseif ($key == 'tid') {
+            $value = (int) $value;
+        }
 
         return parent::processValue($key, $value);
     }

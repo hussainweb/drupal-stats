@@ -32,6 +32,11 @@ class UserRepository extends RepositoryBase
           'field_mentors',
         ];
 
+        $keys_make_int = [
+            'uid',
+            'created',
+        ];
+
         if (in_array($key, $keys_references)) {
             $value = (array) $value;
             foreach ($value as $i => $item) {
@@ -42,7 +47,7 @@ class UserRepository extends RepositoryBase
                 unset($value[$i]->resource);
             }
         }
-        elseif ($key == 'created') {
+        elseif (in_array($key, $keys_make_int)) {
             $value = (int) $value;
         }
 
