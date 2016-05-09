@@ -13,15 +13,22 @@ class MongodbIndexes extends Migration
     public function up()
     {
         Schema::table('nodes', function ($collection) {
+            // Common node fields.
             $collection->index('type');
             $collection->index('title');
             $collection->index('changed');
             $collection->index('comment_count');
             $collection->index('author.id');
+
+            // Project release fields.
             $collection->index('field_download_count');
-            $collection->index('field_project_type');
             $collection->index('field_release_project.id');
+
+            // Project (module, themes, etc...) fields.
+            $collection->index('field_project_type');
             $collection->index('field_supporting_organizations.id');
+
+            // Term fields.
             $collection->index('taxonomy_vocabulary_3.id');
             $collection->index('taxonomy_vocabulary_6.id');
             $collection->index('taxonomy_vocabulary_7.id');
