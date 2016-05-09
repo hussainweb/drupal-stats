@@ -42,4 +42,28 @@ class UserPageController extends Controller
         ];
         return view('users/user-growth', $values);
     }
+
+    public function userGenderGrowth()
+    {
+        $values = [
+            'title' => 'User Gender Growth',
+            'data_url' => url('data/user-gender-growth'),
+            'data_types' => [
+                'na' => 'N/A',
+                'male' => 'Male',
+                'female' => 'Female',
+                'other' => 'Other',
+                'transgender' => 'Transgender',
+            ],
+            'default_data_types' => [
+                'male',
+                'female',
+                'other',
+                'transgender',
+            ],
+            'show_filter' => true,
+            'y_number_format' => '2s',
+        ];
+        return view('users/user-gender-growth', $values);
+    }
 }

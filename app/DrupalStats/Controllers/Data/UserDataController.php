@@ -194,4 +194,75 @@ class UserDataController extends Controller
 
         return response()->json(['total' => $users_count]);
     }
+
+    public function userGenderGrowth()
+    {
+        /** @var Database $db */
+        $db = DB::getMongoDB();
+
+        $users = $db->users->aggregate([
+            [
+                '$project' => [
+                    '_id' => 0,
+                    'created' => 1,
+                    'field_gender' => 1,
+                    'tsday' => [
+                        '$mod' => ['$created', 86400],
+                    ],
+                ],
+            ],
+            [
+                '$project' => [
+                    '_id' => 0,
+                    'field_gender' => 1,
+                    'ts' => [
+                        '$subtract' => ['$created', '$tsday'],
+                    ],
+                ],
+            ],
+            [
+                '$group' => [
+                    '_id' => [
+                        'day' => '$ts',
+                        'gender' => '$field_gender',
+                    ],
+                    'count' => ['$sum' => 1],
+                ],
+            ],
+            [
+                '$sort' => ['_id.day' => 1],
+            ],
+        ]);
+
+        $users_count = [];
+        $last_timestamps = [];
+
+        $min_timestamp = mktime(0, 0, 0, 1, 1, 2000);
+        foreach ($users as $user) {
+            $gender = $user->_id->gender;
+            if (!$gender) {
+                $gender = "na";
+            }
+
+            if (!isset($last_timestamps[$gender])) {
+                $last_timestamps[$gender] = 0;
+            }
+            if (!isset($users_count[$gender])) {
+                $users_count[$gender] = [];
+            }
+
+            // We can just save the last timestamp per each project type as the
+            // list is sorted by timestamp anyway.
+            $last_timestamps[$gender] += $user->count;
+
+            // We don't return data for before 2000.
+            if ($user->_id->day < $min_timestamp) {
+                continue;
+            }
+
+            $users_count[$gender][date('Y-m-d', $user->_id->day)] = $last_timestamps[$gender];
+        }
+
+        return response()->json($users_count);
+    }
 }
