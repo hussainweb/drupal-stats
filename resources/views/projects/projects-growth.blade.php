@@ -31,6 +31,12 @@
         stroke: #000000;
         opacity: 0.6;
     }
+
+    rect.pane {
+        cursor: move;
+        fill: none;
+        pointer-events: all;
+    }
 </style>
 @endpush
 
@@ -88,6 +94,9 @@
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    var zoom = d3.behavior.zoom()
+            .on("zoom", draw);
+
     d3.json('{{ url('data/projects-growth') }}', function (error, data) {
         if (error) {
             throw error;
@@ -142,16 +151,15 @@
 
         xScale.domain(d3.extent(dates, function (d) { return dateFormat.parse(d); }));
         yScale.domain([0, sum]);
+        zoom.x(xScale);
 
         svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")")
-                .call(xAxis)
                 .append('rect').attr('x', 0).attr('y', 0).attr('width', width).attr('height', 2);
 
         svg.append("g")
                 .attr("class", "y axis")
-                .call(yAxis)
                 .append('rect').attr('x', 0).attr('y', 0).attr('width', 2).attr('height', height);
 
         var project = svg.selectAll(".project")
@@ -160,8 +168,7 @@
                 .attr("class", "project");
 
         project.append("path")
-                .attr("class", "area")
-                .attr("d", function(d) { return area(d.values); })
+                .attr("class", function (d) { return d.name + " area"; })
                 .style("fill", function(d) { return color(d.name); });
 
         // Show the arc line.
@@ -194,6 +201,15 @@
                 .data(keys)
                 .enter().append("circle")
                 .attr("class", function (name) { return name + " value-legend-circle"; });
+
+        svg.append("rect")
+                .attr("class", "pane")
+                .attr("width", width)
+                .attr("height", height)
+                .call(zoom);
+
+        draw();
+
         svg.on('mousemove', function () {
             var pos = d3.mouse(svg.node()),
                     x = pos[0], y = pos[1],
@@ -234,6 +250,16 @@
             });
         });
     };
+
+    function draw() {
+        svg.select("g.x.axis").call(xAxis);
+        svg.select("g.y.axis").call(yAxis);
+
+        // TODO: Make this more robust.
+        keys.map(function (name) {
+            svg.select("path.area." + name).attr("d", stack).attr("d", function(d) { return area(d.values); })
+        });
+    }
 
     function selectProjectTypes() {
         keys.length = 0;
