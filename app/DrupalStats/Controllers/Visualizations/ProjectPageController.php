@@ -40,6 +40,7 @@ class ProjectPageController extends Controller
               'project_core',
               'project_theme_engine',
             ],
+            'show_filter' => true,
         ];
         return view('projects/projects-growth', $values);
     }
