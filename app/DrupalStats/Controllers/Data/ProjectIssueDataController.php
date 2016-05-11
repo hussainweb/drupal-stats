@@ -7,6 +7,7 @@
 namespace App\DrupalStats\Controllers\Data;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use MongoDB\Database;
 
@@ -34,6 +35,17 @@ class ProjectIssueDataController extends Controller
         15 => 'patch (to be ported)',
         16 => 'postponed (maintainer needs more info)',
         18 => 'closed (cannot reproduce)',
+    ];
+
+    protected static $openIssueStatus = [
+        1,
+        2,
+        4,
+        8,
+        13,
+        14,
+        15,
+        16,
     ];
 
     protected static $issueCategories = [
@@ -139,5 +151,59 @@ class ProjectIssueDataController extends Controller
             'status' => array_values($statuses),
             'totalIssues' => $total,
         ]);
+    }
+
+    public function projectIssueCount(Request $request)
+    {
+        /** @var Database $db */
+        $db = DB::getMongoDB();
+
+        $match = [
+            'type' => 'project_issue',
+        ];
+
+        if ($request->input('open_issues')) {
+            $match['field_issue_status'] = [
+              '$in' => array_map(function ($value) {
+                  return (string) $value;
+              }, static::$openIssueStatus),
+            ];
+        }
+
+        $issues = $db->nodes->aggregate([
+            [
+                '$match' => $match,
+            ],
+            [
+                '$group' => [
+                    '_id' => [
+                        'project' => '$field_project.id',
+                    ],
+                    'count' => ['$sum' => 1],
+                ],
+            ],
+            [
+                '$sort' => ['count' => -1],
+            ],
+            [
+                '$limit' => 200,
+            ],
+        ])->toArray();
+
+        $ret = [];
+        foreach ($issues as $issue) {
+            $project = $db->nodes->findOne(['_id' => $issue->_id->project]);
+            if ($project) {
+                $ret[] = [
+                  '_id' => $project['nid'],
+                  'title' => $project['title'],
+                  'machine_name' => $project['field_project_machine_name'],
+                  'type' => $project['type'],
+                  'value' => $issue->count,
+                ];
+            }
+        }
+
+        return response()->json($ret);
     }
 }

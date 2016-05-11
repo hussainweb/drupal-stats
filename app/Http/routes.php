@@ -44,7 +44,9 @@ Route::get('/data/user-gender-growth', '\App\DrupalStats\Controllers\Data\UserDa
 Route::get('/data/user-country-growth', '\App\DrupalStats\Controllers\Data\UserDataController@userCountryGrowth');
 
 Route::get('/viz/issues/{name?}', '\App\DrupalStats\Controllers\Visualizations\ProjectIssuePageController@projectIssueBreakup');
+Route::get('/viz/project-issue-count', '\App\DrupalStats\Controllers\Visualizations\ProjectIssuePageController@projectIssueCount');
 Route::get('/data/issues/{name?}', '\App\DrupalStats\Controllers\Data\ProjectIssueDataController@projectIssueBreakup');
+Route::get('/data/project-issue-count', '\App\DrupalStats\Controllers\Data\ProjectIssueDataController@projectIssueCount');
 
 /*
 |--------------------------------------------------------------------------
