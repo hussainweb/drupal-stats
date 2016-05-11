@@ -137,6 +137,7 @@
         var graph_data = [];
         keys.map(function (name) {
             var lastcount = 0;
+            var maxcount = 0;
             var entry = [];
 
             entry.name = name;
@@ -146,6 +147,10 @@
                     lastcount = raw_data[name][date];
                 }
 
+                if (lastcount > maxcount) {
+                    maxcount = lastcount;
+                }
+
                 entry.values.push({
                     date: dateFormat.parse(date),
                     y: lastcount
@@ -153,7 +158,7 @@
             });
 
             graph_data.push(entry);
-            sum += lastcount;
+            sum += maxcount;
         });
 
         var data = stack(graph_data);
