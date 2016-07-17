@@ -72,13 +72,13 @@ class NodeRepository extends RepositoryBase
         if (strpos($key, "taxonomy_vocabulary_") === 0) {
             if (is_array($value)) {
                 foreach ($value as $i => $term_item) {
-                    $this->terms[$term_item->id] = $term_item->id;
+                    $this->terms[$term_item->id] = (int) $term_item->id;
                     unset($value[$i]->uri);
                     unset($value[$i]->resource);
                 }
             }
             else {
-                $this->terms[$value->id] = $value->id;
+                $this->terms[$value->id] = (int) $value->id;
                 unset($value->uri);
                 unset($value->resource);
             }

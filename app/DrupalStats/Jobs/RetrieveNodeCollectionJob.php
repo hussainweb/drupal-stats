@@ -47,6 +47,8 @@ class RetrieveNodeCollectionJob extends RetrieveJobBase
         }
 
         foreach ($repo->terms as $tid) {
+            // This should already be an integer, but make sure.
+            $tid = (int) $tid;
             if (is_null(Term::find($tid))) {
                 echo "Queueing term " . $tid . "...\n";
                 $this->dispatch(new RetrieveTermJob(new TaxonomyTermRequest($tid)));
