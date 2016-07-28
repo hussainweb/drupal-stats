@@ -50,7 +50,7 @@ class ProjectDataController extends Controller
             ];
 
             $term = $node->taxonomy_vocabulary_3->getArrayCopy();
-            if (isset($term[0]->id) && $tid = $term[0]->id) {
+            if (isset($term[0]->id) && $tid = (int) $term[0]->id) {
                 if (!isset($terms[$tid])) {
                     if ($term = $db->terms->findOne(['_id' => $tid])) {
                         $terms[$tid] = $term;
