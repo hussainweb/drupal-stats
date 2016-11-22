@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "98a25f2c22c034b4e3f20211fcba4d94",
-    "content-hash": "a94fc55568345f3827a38bbe0a665b1d",
+    "hash": "49e042810715f25188aac5202fe891ab",
+    "content-hash": "ae8fc20874f9e59756685bd2ebd29815",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -334,16 +334,16 @@
         },
         {
             "name": "hussainweb/drupal-api-client",
-            "version": "0.9.3",
+            "version": "1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hussainweb/drupal-api-client.git",
-                "reference": "97366aa89480cd43e5266e2fc27a5376626b7a37"
+                "reference": "d15de9591a3d5181b4d44c2e50235fb98b3d3448"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hussainweb/drupal-api-client/zipball/97366aa89480cd43e5266e2fc27a5376626b7a37",
-                "reference": "97366aa89480cd43e5266e2fc27a5376626b7a37",
+                "url": "https://api.github.com/repos/hussainweb/drupal-api-client/zipball/d15de9591a3d5181b4d44c2e50235fb98b3d3448",
+                "reference": "d15de9591a3d5181b4d44c2e50235fb98b3d3448",
                 "shasum": ""
             },
             "require": {
@@ -357,7 +357,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.9.x-dev"
+                    "dev-master": "1.x-dev"
                 }
             },
             "autoload": {
@@ -379,9 +379,11 @@
             ],
             "description": "Convenient wrapper on Guzzle to access Drupal.org API",
             "keywords": [
+                "Guzzle",
+                "api",
                 "drupal"
             ],
-            "time": "2016-08-13 17:55:19"
+            "time": "2016-08-13 18:14:18"
         },
         {
             "name": "jakub-onderka/php-console-color",
