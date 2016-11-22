@@ -1,7 +1,12 @@
 $drupal-color: #0678be;
 
+// Fonts
 @import url(https://fonts.googleapis.com/css?family=Lato:400,100);
 @import url(https://fonts.googleapis.com/css?family=Maven+Pro:400,700);
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+
+// Variables
+@import "variables";
 
 $navbar-inverse-bg: $drupal-color;
 $navbar-inverse-brand-color: white;

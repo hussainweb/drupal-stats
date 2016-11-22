@@ -51,4 +51,14 @@ class Kernel extends ConsoleKernel
         $schedule->command('dsupdate:nodes project_issue')->dailyAt('3:30');
 //        $schedule->command('dsget:new-users')->dailyAt('4:30');
     }
+
+    /**
+     * Register the Closure based commands for the application.
+     *
+     * @return void
+     */
+    protected function commands()
+    {
+        require base_path('routes/console.php');
+    }
 }

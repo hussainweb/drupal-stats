@@ -6,16 +6,18 @@
 
 namespace App\DrupalStats\Jobs;
 
-use App\Jobs\Job;
 use Hussainweb\DrupalApi\Entity\Entity;
 use Hussainweb\DrupalApi\Request\Request;
+use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-abstract class RetrieveJobBase extends Job implements ShouldQueue
+abstract class RetrieveJobBase implements ShouldQueue
 {
+    use Queueable;
+
     use InteractsWithQueue, SerializesModels;
     use DispatchesJobs;
 
