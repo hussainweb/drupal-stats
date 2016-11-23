@@ -16,7 +16,6 @@ require('laravel-elixir-vue-2');
 elixir(mix => {
     mix.sass('app.scss')
        .webpack('app.js');
-    mix.browserify('bootstrap.js');
-    mix.browserify('d3-cloud.js');
+    mix.webpack('d3-cloud.js');
     mix.copy('vendor/johan/worldjson/countries.geo.json', 'public/geojson/countries.geo.json');
 });
