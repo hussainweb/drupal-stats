@@ -16,7 +16,12 @@ class NodeTransformer extends TransformerAbstract
             return null;
         }
 
-        return $this->item(Term::find($node->$field_name['id']), new TermDataTransformer());
+        $term = Term::find($node->$field_name['id']);
+        if (!$term) {
+            return null;
+        }
+
+        return $this->item($term, new TermDataTransformer());
     }
 
     protected function processTaxonomyVocabularyArray(Node $node, $vid)
