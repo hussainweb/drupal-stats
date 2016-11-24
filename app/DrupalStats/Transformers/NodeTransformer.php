@@ -16,7 +16,7 @@ class NodeTransformer extends TransformerAbstract
             return null;
         }
 
-        $term = Term::find($node->$field_name['id']);
+        $term = Term::find((int) $node->$field_name['id']);
         if (!$term) {
             return null;
         }
@@ -32,7 +32,7 @@ class NodeTransformer extends TransformerAbstract
         }
 
         $ids = array_map(function ($item) {
-            return $item['id'];
+            return (int) $item['id'];
         }, $node->$field_name);
 
         return $this->collection(Term::whereIn('_id', $ids)->get(), new TermDataTransformer());
