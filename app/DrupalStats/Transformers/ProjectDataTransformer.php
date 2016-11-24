@@ -3,16 +3,15 @@
 namespace App\DrupalStats\Transformers;
 
 use App\DrupalStats\Models\Entities\Node;
-use App\DrupalStats\Models\Entities\Term;
-use League\Fractal\TransformerAbstract;
 
-class ProjectDataTransformer extends TransformerAbstract
+class ProjectDataTransformer extends NodeTransformer
 {
 
     protected $defaultIncludes = [
         'moduleCategories',
         'maintenanceStatus',
         'developmentStatus',
+        'releases',
     ];
 
     public function transform(Node $node)
@@ -50,27 +49,11 @@ class ProjectDataTransformer extends TransformerAbstract
         return $this->processTaxonomyVocabulary($node, '46');
     }
 
-    protected function processTaxonomyVocabulary(Node $node, $vid)
+    public function includeReleases(Node $node)
     {
-        $field_name = 'taxonomy_vocabulary_' . $vid;
-        if (empty($node->$field_name)) {
-            return null;
-        }
-
-        return $this->item(Term::find($node->$field_name['id']), new TermDataTransformer());
-    }
-
-    protected function processTaxonomyVocabularyArray(Node $node, $vid)
-    {
-        $field_name = 'taxonomy_vocabulary_' . $vid;
-        if (empty($node->$field_name)) {
-            return null;
-        }
-
-        $ids = array_map(function ($item) {
-            return $item['id'];
-        }, $node->$field_name);
-
-        return $this->collection(Term::whereIn('_id', $ids)->get(), new TermDataTransformer());
+        $releases = Node::where('type', 'project_release')
+            ->where('field_release_project.id', (string) $node->nid)
+            ->get();
+        return $this->collection($releases, new ProjectReleaseTransformer());
     }
 }
