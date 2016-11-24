@@ -29,6 +29,7 @@ class ProjectDataTransformer extends TransformerAbstract
             'downloads' => $node->field_download_count,
             'demo' => $node->field_project_demo['url'] ?? '',
             'documentation' => $node->field_project_documentation['url'] ?? '',
+            'homepage' => $node->field_project_homepage['url'] ?? '',
             'created' => date('c', $node->created),
             'changed' => date('c', $node->changed),
         ];
