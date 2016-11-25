@@ -17,10 +17,15 @@ class ProjectController extends Controller
      */
     protected $fractalManager;
 
-    public function __construct(Manager $fractal_manager)
+    public function __construct(Manager $fractal_manager, Request $request)
     {
-        $this->fractalManager = $fractal_manager;
         $this->middleware('data.cache');
+
+        $this->fractalManager = $fractal_manager;
+        $include = $request->query->get('include');
+        if ($include) {
+            $this->fractalManager->parseIncludes($request->query->get('include'));
+        }
     }
 
     public function projectInfo($name)

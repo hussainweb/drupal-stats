@@ -7,7 +7,7 @@ use App\DrupalStats\Models\Entities\Node;
 class ProjectReleaseTransformer extends NodeTransformer
 {
 
-    protected $defaultIncludes = [
+    protected $availableIncludes = [
         'coreCompatibility',
         'releaseType',
     ];
@@ -17,12 +17,14 @@ class ProjectReleaseTransformer extends NodeTransformer
         return [
             'nid' => $node->nid,
             'title' => $node->title,
-            'version' => $node->field_release_version,
-            'version_major' => $node->field_release_version_major,
-            'version_minor' => $node->field_release_version_minor,
-            'version_patch' => $node->field_release_version_patch,
-            'version_extra' => $node->field_release_version_extra,
-            'vcs_label' => $node->field_release_vcs_label,
+            'version' => [
+                'full' => $node->field_release_version,
+                'major' => $node->field_release_version_major,
+                'minor' => $node->field_release_version_minor,
+                'patch' => $node->field_release_version_patch,
+                'extra' => $node->field_release_version_extra,
+                'vcs_label' => $node->field_release_vcs_label,
+            ],
             'created' => date('c', $node->created),
             'changed' => date('c', $node->changed),
         ];
