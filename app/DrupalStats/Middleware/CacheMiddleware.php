@@ -4,6 +4,7 @@ namespace App\DrupalStats\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
@@ -21,9 +22,17 @@ class CacheMiddleware
     public function handle(Request $request, Closure $next)
     {
         $key = $this->buildCacheKey($request);
-        return Cache::remember($key, static::CACHE_MINUTES, function () use ($request, $next) {
-            return $next($request);
-        });
+        if (! is_null($response = Cache::get($key))) {
+            return $response;
+        }
+
+        /** @var Response $response */
+        $response = $next($request);
+        if ($response->isSuccessful() || $response->isRedirection()) {
+            Cache::put($key, $response, static::CACHE_MINUTES);
+        }
+
+        return $response;
     }
 
     /**
