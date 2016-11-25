@@ -4,9 +4,9 @@ namespace App\DrupalStats\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 
 class CacheMiddleware
 {
@@ -22,15 +22,13 @@ class CacheMiddleware
     public function handle(Request $request, Closure $next)
     {
         $key = $this->buildCacheKey($request);
-        if (! is_null($response = Cache::get($key))) {
-            return $response;
+        if (!is_null($response = Cache::get($key))) {
+            return $this->unserializeResponse($response);
         }
 
         /** @var Response $response */
         $response = $next($request);
-        if ($response->isSuccessful() || $response->isRedirection()) {
-            Cache::put($key, $response, static::CACHE_MINUTES);
-        }
+        Cache::put($key, $this->serializeResponse($response), static::CACHE_MINUTES);
 
         return $response;
     }
@@ -47,5 +45,21 @@ class CacheMiddleware
     protected function buildCacheKey(Request $request, $suffix = '')
     {
         return 'route_' . Str::slug($request->getUri()) . $suffix;
+    }
+
+    protected function serializeResponse(Response $response)
+    {
+        $content = $response->getContent();
+        $status_code = $response->getStatusCode();
+        $headers = $response->headers;
+        return serialize(compact('content', 'status_code', 'headers'));
+    }
+
+    protected function unserializeResponse($serializedResponse)
+    {
+        $responseProperties = unserialize($serializedResponse);
+        $response = new Response($responseProperties['content'], $responseProperties['status_code']);
+        $response->headers = $responseProperties['headers'];
+        return $response;
     }
 }
