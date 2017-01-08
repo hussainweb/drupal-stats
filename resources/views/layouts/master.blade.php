@@ -80,8 +80,8 @@
                 <p>This application is licensed under <a href="https://github.com/hussainweb/drupal-stats/blob/master/LICENSE.md">GPL-2</a>. It is built with open source components <a href="https://github.com/hussainweb/drupal-stats#license">licensed under GPL, MIT, BSD, and other permissive licenses</a>.</p>
             </div>
             <div class="navbar-text pull-right">
-                <a href="https://twitter.com/hussainweb"><i class="fa fa-twitter-square fa-2x"></i></a>
-                <a href="https://github.com/hussainweb"><i class="fa fa-github-square fa-2x"></i></a>
+                <a href="https://twitter.com/dru_stats"><i class="fa fa-twitter-square fa-2x"></i></a>
+                <a href="https://github.com/hussainweb/drupal-stats"><i class="fa fa-github-square fa-2x"></i></a>
                 <a href="https://plus.google.com/+HusainD/"><i class="fa fa-google-plus-square fa-2x"></i></a>
                 <a href="https://in.linkedin.com/in/husainad"><i class="fa fa-linkedin-square fa-2x"></i></a>
                 <a href="https://www.facebook.com/hussainweb"><i class="fa fa-facebook-square fa-2x"></i></a>
