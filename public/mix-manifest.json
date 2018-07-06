@@ -1,5 +1,6 @@
 {
-  "/js/app.js": "/js/app.js",
-  "/css/app.css": "/css/app.css",
-  "/js/d3-cloud.js": "/js/d3-cloud.js"
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/js/d3-cloud.js": "/js/d3-cloud.js",
+    "/geojson/countries.geo.json": "/geojson/countries.geo.json"
 }

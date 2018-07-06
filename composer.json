@@ -19,6 +19,7 @@
     ],
     "require": {
         "php": ">=7.0",
+        "fideloper/proxy": "^4.0",
         "hussainweb/drupal-api-client": "~1.0",
         "jenssegers/mongodb": "~3.1",
         "johan/worldjson": "^1.0",
