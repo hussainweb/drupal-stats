@@ -28,7 +28,8 @@
         "league/fractal": "^0.14.0",
         "michelf/php-markdown": "^1.6",
         "pda/pheanstalk": "~3.0",
-        "pmatseykanets/artisan-beans": "^0.1.4"
+        "pmatseykanets/artisan-beans": "^0.1.4",
+        "sentry/sentry-laravel": "^0.11.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
