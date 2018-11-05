@@ -1,0 +1,23 @@
+name: drustats
+recipe: laravel
+
+services:
+  appserver:
+    type: php:7.2
+    webroot: public
+    run_as_root:
+      - "pecl install mongodb"
+      - "docker-php-ext-enable mongodb"
+  database:
+    type: mongo:3.5
+    config: .lando/mongo.yml
+
+#config:
+#  php: 7.2
+#  webroot: public
+#  xdebug: true
+
+tooling:
+  mongo:
+    service: database
+    description: Drop into the mongo shell
