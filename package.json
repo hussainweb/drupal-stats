@@ -14,10 +14,10 @@
         "bootstrap-sass": "^3.3.7",
         "cross-env": "^5.1",
         "jquery": "^3.2",
-        "laravel-mix": "^2.0",
-        "lodash": "^4.17.10",
-        "popper.js": "^1.12",
-        "vue": "^2.5.7"
+        "laravel-mix": "^2.1.14",
+        "lodash": "^4.17.11",
+        "popper.js": "^1.14.4",
+        "vue": "^2.5.17"
     },
     "dependencies": {
         "d3": "^3.5.14",
