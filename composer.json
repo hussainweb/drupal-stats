@@ -25,7 +25,7 @@
         "johan/worldjson": "^1.0",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
-        "league/fractal": "^0.14.0",
+        "league/fractal": "^0.17",
         "michelf/php-markdown": "^1.6",
         "pda/pheanstalk": "~3.0",
         "pmatseykanets/artisan-beans": "^2.1",
